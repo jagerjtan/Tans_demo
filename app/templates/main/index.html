@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hey! Tans!</title>
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }} }}"></script>
 </head>
 <body>
-    <p style="color: black;">Tans! Welcome Home!</p>
+<p style="color: black;">Tans! Welcome Home!</p>
+<a href="{{ url_for("admin.index") }}">back to cores</a>
 </body>
 </html>

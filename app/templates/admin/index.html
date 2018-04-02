@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Core</title>
-    <script src="../../static/js/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
-    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+
+{#    <script src="../../static/js/jquery-3.3.1.min.js"></script>#}
+{#    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">#}
+{#    <script src="../../static/js/bootstrap.min.js"></script>#}
 
 </head>
 <body>
@@ -19,8 +23,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{url_for('home.index')}}" class="navbar-brand" style="width:250px;">
-                <img src="{{url_for('static',filename ='base/images/logo.png')}}" style="height:30px;">&nbsp;微电影
+            <a href="{{url_for('main.index')}}" class="navbar-brand" style="width:250px;">
+                <img src="{{url_for('static',filename ='images/kumamoto.jpg')}}" style="height:30px;">
+{#                &nbsp;Tan#}
             </a>
         </div>
         <!--小屏幕导航按钮和logo-->
@@ -30,25 +35,25 @@
                 <div class="form-group input-group">
                     <input type="text" class="form-control" placeholder="请输入电影名！">
                     <span class="input-group-btn">
-                        <a class="btn btn-default" href="{{url_for('home.search')}}"><span class="glyphicon glyphicon-search"></span>&nbsp;搜索</a>
+                        <a class="btn btn-default" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-search"></span>&nbsp;搜索</a>
                     </span>
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="curlink" href="{{url_for('home.index')}}"><span class="glyphicon glyphicon-film"></span>&nbsp;电影</a>
+                    <a class="curlink" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-film"></span>&nbsp;电影</a>
                 </li>
                 <li>
-                    <a class="curlink" href="{{url_for('home.login')}}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a>
+                    <a class="curlink" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a>
                 </li>
                 <li>
-                    <a class="curlink" href="{{url_for('home.register')}}"><span class="glyphicon glyphicon-plus"></span>&nbsp;注册</a>
+                    <a class="curlink" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-plus"></span>&nbsp;注册</a>
                 </li>
                 <li>
-                    <a class="curlink" href="{{url_for('home.logout')}}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
+                    <a class="curlink" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                 </li>
                 <li>
-                    <a class="curlink" href="{{url_for('home.user')}}"><span class="glyphicon glyphicon-user"></span>&nbsp;会员</a>
+                    <a class="curlink" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-user"></span>&nbsp;会员</a>
                 </li>
             </ul>
         </div>
