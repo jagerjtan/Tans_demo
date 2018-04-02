@@ -23,23 +23,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{url_for('main.index')}}" class="navbar-brand" style="width:250px;">
-                <img src="{{url_for('static',filename ='images/kumamoto.jpg')}}" style="height:30px;">
+            <a href="{{url_for('main.index')}}" class="navbar-brand" style="width:50px;">
+                <img src="{{url_for('static',filename ='images/kumamoto.jpg')}}" style="width:30px;">
 {#                &nbsp;Tan#}
             </a>
         </div>
         <!--小屏幕导航按钮和logo-->
         <!--导航-->
         <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-left" role="search" style="margin-top:18px;">
-                <div class="form-group input-group">
-                    <input type="text" class="form-control" placeholder="请输入电影名！">
-                    <span class="input-group-btn">
-                        <a class="btn btn-default" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-search"></span>&nbsp;搜索</a>
-                    </span>
-                </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
+{#            <form class="navbar-form navbar-left" role="search" style="margin-top:18px;">#}
+{#                <div class="form-group input-group">#}
+{#                    <input type="text" class="form-control" placeholder="请输入电影名！">#}
+{#                    <span class="input-group-btn">#}
+{#                        <a class="btn btn-default" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-search"></span>&nbsp;搜索</a>#}
+{#                    </span>#}
+{#                </div>#}
+{#            </form>#}
+            <ul class="nav navbar-nav navbar-left">
                 <li>
                     <a class="curlink" href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-film"></span>&nbsp;电影</a>
                 </li>
