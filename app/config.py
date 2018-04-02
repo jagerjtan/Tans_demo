@@ -4,7 +4,7 @@ import os
 from datetime import timedelta
 
 # 排查模式
-DEBUG = False
+DEBUG = True
 
 # 数据库操作相关
 HOSTNAME = '127.0.0.1'

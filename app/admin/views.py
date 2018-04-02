@@ -4,5 +4,8 @@ from flask import render_template, url_for, redirect, flash, request, session
 
 @admin.route("/",methods=['GET'])
 def index():
-    return render_template("admin/index.html")
+    return render_template("admin/login.html")
 
+@admin.route("/login/",methods=['GET','POST'])
+def login():
+    return render_template("admin/login.html")
