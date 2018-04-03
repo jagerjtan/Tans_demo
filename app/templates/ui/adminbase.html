@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{ url_for('main.index') }}" class="navbar-brand"
+            <a href="{{ url_for('admin.index') }}" class="navbar-brand"
                style="width:100px;padding: 0px;margin-left:0px;">
                 <img class="nav-logo" src="{{ url_for('static',filename ='images/kumamoto.jpg') }}">
                 {#                &nbsp;Tan#}
@@ -52,26 +52,26 @@
             {#            </form>#}
             <ul class="nav navbar-nav navbar-left">
                 <li>
-                    <a class="curlink" href="{{ url_for('main.index') }}"><span class="glyphicon glyphicon-equalizer"></span>&nbsp;面板</a>
+                    <a class="curlink" href="{{ url_for('admin.index') }}"><span class="glyphicon glyphicon-equalizer"></span>&nbsp;管理面板</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user %}
                     <li>
-                        <a class="curlink" href="{{ url_for('main.index') }}"><span
-                                class="glyphicon glyphicon-user"></span>&nbsp;会员</a>
+                        <a class="curlink" href="{{ url_for('admin.acount') }}"><span
+                                class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
                     </li>
                     <li>
-                        <a class="curlink" href="{{ url_for('main.index') }}"><span
+                        <a class="curlink" href="{{ url_for('admin.logout') }}"><span
                                 class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                     </li>
                 {% else %}
                     <li>
-                        <a class="curlink" href="{{ url_for('admin.login') }}"><span
+                        <a class="curlink" href="{{ url_for('main.login') }}"><span
                                 class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a>
                     </li>
                     <li>
-                        <a class="curlink" href="{{ url_for('main.index') }}"><span
+                        <a class="curlink" href="{{ url_for('admin.login') }}"><span
                                 class="glyphicon glyphicon-plus"></span>&nbsp;注册</a>
                     </li>
 
@@ -83,7 +83,7 @@
 </nav>
 {% block main %}{% endblock %}
 <div align="center"><p>
-    <h1>Edit Things Here!</h1></p></div>
+    <h1>Inherited from adminbase! Edit Things Here!</h1></p></div>
 </body>
 {% block script %}{% endblock %}
 </html>
