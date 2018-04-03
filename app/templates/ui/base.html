@@ -8,9 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
     <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
     <style>
+        body {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+
         .nav-logo {
             margin-left: 10%;
-            padding:5px 0px 0px 0px;
+            padding: 5px 0px 0px 0px;
             height: 90%;
             border-radius: 90%;
         }
@@ -23,7 +28,6 @@
 
 </head>
 <body>
-<div style="height: 101px;"></div>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <!--小屏幕导航按钮和logo-->
@@ -52,17 +56,18 @@
             {#            </form>#}
             <ul class="nav navbar-nav navbar-left">
                 <li>
-                    <a class="curlink" href="{{ url_for('main.index') }}"><span class="glyphicon glyphicon-equalizer"></span>&nbsp;面板</a>
+                    <a class="curlink" href="{{ url_for('main.index') }}"><span
+                            class="glyphicon glyphicon-equalizer"></span>&nbsp;信息区</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {% if user %}
+                {% if "online" in get_flashed_messages(category_filter=["ok"]) %}
                     <li>
                         <a class="curlink" href="{{ url_for('main.account') }}"><span
                                 class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
                     </li>
                     <li>
-                        <a class="curlink" href="{{ url_for('main.index') }}"><span
+                        <a class="curlink" href="{{ url_for('main.logout') }}"><span
                                 class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                     </li>
                 {% else %}
@@ -82,8 +87,11 @@
     </div>
 </nav>
 {% block main %}{% endblock %}
-<div align="center"><p>
-    <h1>Edit Things Here!</h1></p></div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div style="text-align:center">
+        继承自父模板 - base.html
+    </div>
+</nav>
 </body>
 {% block script %}{% endblock %}
 </html>

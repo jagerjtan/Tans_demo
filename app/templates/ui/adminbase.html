@@ -8,9 +8,13 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
     <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
     <style>
+        body{
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
         .nav-logo {
             margin-left: 10%;
-            padding:5px 0px 0px 0px;
+            padding: 5px 0px 0px 0px;
             height: 90%;
             border-radius: 90%;
         }
@@ -23,7 +27,6 @@
 
 </head>
 <body>
-<div style="height: 101px;"></div>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <!--小屏幕导航按钮和logo-->
@@ -52,13 +55,17 @@
             {#            </form>#}
             <ul class="nav navbar-nav navbar-left">
                 <li>
-                    <a class="curlink" href="{{ url_for('admin.index') }}"><span class="glyphicon glyphicon-equalizer"></span>&nbsp;管理面板</a>
+                    <a class="curlink" href="{{ url_for('admin.index') }}"><span
+                            class="glyphicon glyphicon-equalizer"></span>&nbsp;管理面板</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {% if user %}
+                {% if "online" in get_flashed_messages(category_filter=["ok"]) %}
                     <li>
-                        <a class="curlink" href="{{ url_for('admin.acount') }}"><span
+                        <a class="curlink" href="#">Online</a>
+                    </li>
+                    <li>
+                        <a class="curlink" href="{{ url_for('admin.account') }}"><span
                                 class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
                     </li>
                     <li>
@@ -66,6 +73,7 @@
                                 class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                     </li>
                 {% else %}
+                    {#                {% if msg in get_flashed_messages(category_filter=["err"]) == 'offline' %}#}
                     <li>
                         <a class="curlink" href="{{ url_for('main.login') }}"><span
                                 class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a>
@@ -82,8 +90,11 @@
     </div>
 </nav>
 {% block main %}{% endblock %}
-<div align="center"><p>
-    <h1>Inherited from adminbase! Edit Things Here!</h1></p></div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+<div style="text-align:center">
+    继承自父模板 - adminbase.html
+</div>
+</nav>
 </body>
 {% block script %}{% endblock %}
 </html>

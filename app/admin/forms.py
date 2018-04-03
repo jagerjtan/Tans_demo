@@ -8,14 +8,14 @@ from app.models import Admin
 class LoginForm(FlaskForm):
     """管理员登录表单"""
     account = StringField(
-        label="帐号",
+        label="账户",
         validators=[
-            DataRequired("请输入帐号！")
+            DataRequired("请输入账户！")
         ],
-        description="帐号",
+        description="账户",
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入帐号！",
+            "placeholder": "账户",
         }
     )
     pwd = PasswordField(
@@ -26,11 +26,11 @@ class LoginForm(FlaskForm):
         description="密码",
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入密码！",
+            "placeholder": "密码",
         }
     )
     submit = SubmitField(
-        "登录",
+        "Login",
         render_kw={
             "class": "btn btn-primary btn-block btn-flat",
         }
@@ -40,4 +40,5 @@ class LoginForm(FlaskForm):
         account = field.data
         admin = Admin.query.filter_by(account=account).count()
         if admin == 0:
-            raise ValidationError("帐号和密码不匹配！")
+            return None
+            # raise ValidationError("帐号和密码不匹配！") 这里不给提示是因为防止有人不停用不存在的账号来检测存在的账号

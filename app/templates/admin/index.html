@@ -1,19 +1,18 @@
 {% extends "ui/adminbase.html" %}
-{% block title %}
-    Core
-{% endblock %}
+{% block title %}Core{% endblock %}
 
 {% block css %}{% endblock %}
 
 {% block main %}
-    <div align="center"><h4><a href="{{ url_for("admin.account") }}">后台账号信息面板</a></h4></div>
     <div align="center">
         {% for msg in get_flashed_messages(category_filter=["ok"]) %}
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                <h4><i class="icon fa fa-check"></i>操作成功！</h4>
-                {{ msg }}
-            </div>
+            {% if msg != 'online' %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    <h4><i class="icon fa fa-check"></i>操作成功！</h4>
+                    {{ msg }}
+                </div>
+            {% endif %}
         {% endfor %}
         {% for msg in get_flashed_messages(category_filter=["err"]) %}
             <div class="alert alert-danger alert-dismissible">
@@ -23,5 +22,11 @@
             </div>
         {% endfor %}
     </div>
+    <div align="center"><h4><a href="#" style="color: orangered;">后台主页</a></h4></div>
+    <div align="center"><h4><a href="#">服务器状态</a></h4></div>
+    <div align="center"><h4><a href="#">查看Tan信息</a></h4></div>
+    <div align="center"><h4><a href="#">成员列表</a></h4></div>
+    <div align="center"><h4><a href="#">查看成员信息</a></h4></div>
+    <div align="center"><h4><a href="#">添加成员</a></h4></div>
 {% endblock %}
 {% block script %}{% endblock %}

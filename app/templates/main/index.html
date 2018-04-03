@@ -2,8 +2,28 @@
 {% block title %}Tan's Home{% endblock %}
 
 {% block css %}{% endblock %}
+
 {% block main %}
-    <div><h4><a href="{{ url_for("main.account") }}">账号信息面板</a></h4></div>
-    <div align="center"><h1>This home page!</h1></div>
+    <div align="center">
+        {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+            {% if msg != 'online' %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    <h4><i class="icon fa fa-check"></i>操作成功！</h4>
+                    {{ msg }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for msg in get_flashed_messages(category_filter=["err"]) %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> 操作失败！</h4>
+                {{ msg }}
+            </div>
+        {% endfor %}
+    </div>
+    <div align="center"><h4><a href="#" style="color: orangered;">前台主页</a></h4></div>
+    <div align="center"><h4><a href="#">Tan主要信息</a></h4></div>
+    <div align="center"><h4><a href="#">Tan详细信息</a></h4></div>
 {% endblock %}
 {% block script %}{% endblock %}
