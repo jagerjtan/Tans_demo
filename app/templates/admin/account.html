@@ -1,15 +1,26 @@
 {% extends "ui/adminbase.html" %}
 {% block title %}{% endblock %}
 {% block css %}
+    <style>
+    .mylogoinfo{
+        box-shadow: 0 3px 5px 3px #ebf2ff;
+        height: 100%;
+        margin-bottom: 9px;
+    }
+    .myaccount-row{
+        background: #ffffff;
+        height: 200px;
+    }
+    </style>
 {% endblock %}
 {% block main %}
     <div class="container">
-        <div class="row" style="border: 1px solid black; height: 200px;padding: 1% 0% 1% 0%;">
-            <div class="col-md-3 col-md-offset-2 col-xs-4" style="border: 1px solid blue;height: 100%;">
+        <div class="row myaccount-row">
+            <div class="col-md-3 col-md-offset-2 col-xs-12 mylogoinfo">
                 <p>头像</p>
                 <p>修改头像</p>
             </div>
-            <div class="col-md-5 col-xs-8" style="border: 1px solid blue;height: 100%;">
+            <div class="col-md-5 col-xs-12 mylogoinfo"">
                 <p>名字</p>
                 <p>简介</p>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -41,8 +52,8 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="border: 1px solid black; height: 200px;padding: 1% 0% 1% 0%;">
-            <div class="col-md-8 col-md-offset-2 col-xs-12" style="border: 1px solid blue;height: 100%;">
+        <div class="row myaccount-row">
+            <div class="col-md-8 col-md-offset-2 col-xs-12 mylogoinfo">
                 <p>饼状图</p>
                 <p>主要信息</p>
             </div>
