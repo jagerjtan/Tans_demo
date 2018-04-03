@@ -6,88 +6,133 @@
             box-shadow: 0 3px 5px 3px #ebf2ff;
             height: 100%;
             margin-bottom: 9px;
+            padding:0px;
         }
 
         .myaccount-row {
             background: #ffffff;
-            height: 200px;
+            {#height: 200px;#}
         }
     </style>
 {% endblock %}
 {% block main %}
+    <!-- Main Container-->
     <div class="container">
-    <div class="row myaccount-row">
-        <div class="col-md-3 col-md-offset-2 col-xs-12 mylogoinfo">
-            <p>头像</p>
-            <p>修改头像</p>
-        </div><!--1st col-->
-        <div class="col-md-5 col-xs-12 mylogoinfo">
-            <p>名字</p>
-            <p>简介</p>
-
-
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                修改密码
-            </button><!--modal button-->
-            <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog"
-                 aria-labelledby="myModalLabel" style="margin-top: 60px;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button data-dismiss="modal" class="close" type="button"><span
-                                    aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">修改密码</h4>
+        <!-- 1s Row -->
+        <div class="row myaccount-row">
+            <!--1s Col-->
+            <div class="col-md-3 col-md-offset-2 col-xs-12 mylogoinfo">
+                <!--头像-->
+                <div style="width:100%;height:160px;">头像</div><!--头像-->
+                <!--折叠栏-->
+                <div class="panel-group" role="tablist" style="margin-bottom: 0px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="collapseListGroupHeading1" style="text-align: center">
+                            <h4 class="panel-title">
+                                <a class="" role="button" data-toggle="collapse" href="#collapseListGroup1"
+                                   aria-expanded="true"
+                                   aria-controls="collapseListGroup1">
+                                    编辑信息
+                                </a>
+                            </h4>
                         </div>
-                        <div class="modal-body">
-                            <form class="form-group" role="form" method="post">
-                                <div class="form-group has-feedback">
-                                    <label for="input_oldpwd">{{ form.old_pwd.label}}</label>
-                                    {{ form.old_pwd }}
-                                    {% for err in form.old_pwd.errors %}
-                                        <div class="col-md-12">
-                                            <p style="color: red">{{ err }}</p>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <div class="form-group">
-                                    <label for="input_newpwd">{{ form.new_pwd.label}}</label>
-                                    {{ form.new_pwd }}
-                                    {% for err in form.new_pwd.errors %}
-                                        <div class="col-md-12">
-                                            <p style="color: red">{{ err }}</p>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <div class="form-group">
-                                    <label for="input_repwd">{{ form.re_pwd.label}}</label>
-                                    {{ form.re_pwd }}
-                                    {% for err in form.re_pwd.errors %}
-                                        <div class="col-md-12">
-                                            <p style="color: red">{{ err }}</p>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-                            {#                            <button class="btn btn-primary" type="button">提交</button>#}
-                            {{ form.csrf_token }}
-                            {{ form.submit }}
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!--modal-->
-
-        </div><!--2nd Col-->
+                        <div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="collapseListGroupHeading1" aria-expanded="true" style="">
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="#">编辑个人信息</a></li>
+                                <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a></li>
+                                <li class="list-group-item"><a href="#">等待修改</a></li>
+                            </ul>
+                            <div class="panel-footer">
+                                <span class="glyphicon glyphicon-menu-up"></span>
+                                <a href="#collapseListGroup1" data-toggle="collapse" style="color: black">收起</a>
+                            </div>
+                        </div><!--折叠栏列表-->
+                    </div>
+                </div><!--折叠栏-->
+            </div><!--1st col-->
+            <!-- 2nd Col -->
+            <div class="col-md-5 col-xs-12 mylogoinfo" style="height: 199.6px;">
+                <div style="padding-left: 5px"><p>名字</p>
+                <p>基本个人信息</p></div>
+            </div><!--2nd Col-->
         </div><!--1st ROW-->
+        <!-- 2nd Row -->
         <div class="row myaccount-row">
             <div class="col-md-8 col-md-offset-2 col-xs-12 mylogoinfo">
                 <p>饼状图</p>
                 <p>主要信息</p>
             </div>
         </div><!--2nd ROW-->
-    </div><!--main container-->
+    </div><!--Main container-->
+
+    <!-- my1stModal -->
+    <div class="modal fade" id="my1stModal" data-backdrop="static" tabindex="-1" role="dialog"
+         aria-labelledby="my1stModalLabel" style="margin-top: 60px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button data-dismiss="modal" class="close" type="button"><span
+                            aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-group" role="form" method="post">
+                        <div class="form-group has-feedback">
+                            <label for="input_oldpwd">{{ form1.old_pwd.label }}</label>
+                            {{ form1.old_pwd }}
+                            {% for err in form1.old_pwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_newpwd">{{ form1.new_pwd.label }}</label>
+                            {{ form1.new_pwd }}
+                            {% for err in form1.new_pwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_repwd">{{ form1.re_pwd.label }}</label>
+                            {{ form1.re_pwd }}
+                            {% for err in form1.re_pwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                    {#                            <button class="btn btn-primary" type="button">提交</button>#}
+                    {{ form1.csrf_token }}
+                    {{ form1.submit }}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!--my1stModal-->
+
+    {#    <!--可切换标签-->#}
+    {#    <div style="margin-top: -5px;margin-left: -15px;">#}
+    {#        <ul id="mytab" class="nav nav-tabs">#}
+    {#            <li class="active"><a href="#logoinfo" data-toggle="tab">头像</a></li>#}
+    {#            <li><a href="#editinfo" data-toggle="tab">设置</a></li>#}
+    {#        </ul>#}
+    {#        <div id="myTabContent" class="tab-content">#}
+    {#            <div class="tab-pane fade in active" id="logoinfo">此处插入头像</div>#}
+    {#            <div class="tab-pane" id="editinfo">#}
+    {#                <p>此处插入修改密码编辑个人信息</p>#}
+    {#                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my1stModal">#}
+    {#                    修改密码#}
+    {#                </button><!--my1stModal Button-->#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div><!--可切换标签-->#}
 
 {% endblock %}
 {% block script %}

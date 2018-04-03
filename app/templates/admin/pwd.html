@@ -1,10 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "ui/adminbase.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+    <style>
+        .mylogoinfo {
+            box-shadow: 0 3px 5px 3px #ebf2ff;
+            height: 100%;
+            margin-bottom: 9px;
+        }
 
-</body>
-</html>
+        .myaccount-row {
+            background: #ffffff;
+            height: 200px;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+    <body>
+
+    <div style="width:60%;margin-left: 300px;">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseThree"
+                       aria-expanded="false" aria-controls="collapseThree">
+                        Collapsible Group Item #3
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="#">1</a></li>
+                    <li class="list-group-item"><a href="#">1</a></li>
+                    <li class="list-group-item"><a href="#">1</a></li>
+                    <li class="list-group-item"><a href="#">1</a></li>
+                    <li class="list-group-item"><a href="#">1</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="collapseListGroupHeading1">
+                <h4 class="panel-title">
+                    <a class="" role="button" data-toggle="collapse" href="#collapseListGroup1" aria-expanded="true"
+                       aria-controls="collapseListGroup1">
+                        编辑信息
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel"
+                 aria-labelledby="collapseListGroupHeading1" aria-expanded="true" style="">
+                <ul class="list-group">
+                    <li class="list-group-item">Bootply</li>
+                    <li class="list-group-item">One itmus ac facilin</li>
+                    <li class="list-group-item">Second eros</li>
+                </ul>
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-menu-up"></span>
+                    <a href="#collapseListGroup1" data-toggle="collapse" style="color: black">收起</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <!--Panel1-->
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                       aria-expanded="true" aria-controls="collapseOne">
+                        Collapsible Group Item #1
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                    sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                    labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+
+        <!--Panel2-->
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Collapsible Group Item #2
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                    sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                    labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

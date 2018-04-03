@@ -65,12 +65,11 @@ def logout():
 @admin.route("/pwd/", methods=['GET', 'POST'])
 @admin_login_req
 def pwd():
-    form=PwdForm()
     return render_template("admin/pwd.html")
 
 
 @admin.route("/account/", methods=['GET','POST'])
 @admin_login_req
 def account():
-    form=PwdForm()
-    return render_template("admin/account.html",form=form)
+    form1=PwdForm()
+    return render_template("admin/account.html",form1=form1)
