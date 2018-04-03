@@ -47,29 +47,40 @@ class PwdForm(FlaskForm):
     old_pwd = PasswordField(
         label="旧密码",
         validators=[
-            DataRequired("请输入旧密码"),
+            DataRequired("请输入旧密码")
         ],
         description="旧密码",
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入旧密码",
+            "placeholder": "请输入旧密码"
         }
     )
     new_pwd = PasswordField(
         label="新密码",
         validators=[
-            DataRequired("请输入新密码"),
+            DataRequired("请输入新密码")
         ],
         description="新密码",
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入新密码",
+            "placeholder": "请输入新密码"
+        }
+    )
+    re_pwd = PasswordField(
+        label="确认密码",
+        validators=[
+            DataRequired("请确认新密码")
+        ],
+        description="确认密码",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "再次输入新密码"
         }
     )
     submit = SubmitField(
         "提交",
         render_kw={
-            "class": "btn btn-primary",
+            "class": "btn btn-primary"
         }
     )
 
@@ -82,3 +93,4 @@ class PwdForm(FlaskForm):
         ).first()
         if not admin.check_pwd(pwd):
             raise ValidationError("旧密码错误")
+

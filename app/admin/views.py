@@ -3,7 +3,7 @@ from functools import wraps
 from . import admin
 from app import db,app
 from flask import render_template, url_for, redirect, flash, request, session
-from app.admin.forms import LoginForm
+from app.admin.forms import LoginForm,PwdForm
 from app.models import Admin, Adminlog
 
 
@@ -65,10 +65,12 @@ def logout():
 @admin.route("/pwd/", methods=['GET', 'POST'])
 @admin_login_req
 def pwd():
+    form=PwdForm()
     return render_template("admin/pwd.html")
 
 
-@admin.route("/account/", methods=['GET'])
+@admin.route("/account/", methods=['GET','POST'])
 @admin_login_req
 def account():
-    return render_template("admin/account.html")
+    form=PwdForm()
+    return render_template("admin/account.html",form=form)
