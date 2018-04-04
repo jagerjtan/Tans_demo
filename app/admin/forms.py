@@ -2,7 +2,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, ValidationError, EqualTo
-from app.models import Admin
+from app.models import Admin,Member
 
 
 class LoginForm(FlaskForm):
@@ -148,6 +148,10 @@ class RegisterForm(FlaskForm):
             "class":"btn btn-primary"
         }
     )
-
+    def validate_account(self, field):
+        account = field.data
+        member = Member.query.filter_by(account=account).count()
+        if member >0:
+            raise ValidationError("账户已存在")
 
 
