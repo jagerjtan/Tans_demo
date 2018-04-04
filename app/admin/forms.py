@@ -69,7 +69,8 @@ class PwdForm(FlaskForm):
     re_pwd = PasswordField(
         label="确认密码",
         validators=[
-            DataRequired("请确认新密码")
+            DataRequired("请确认新密码"),
+            EqualTo("new_pwd","两次密码输入不一致！")
         ],
         description="确认密码",
         render_kw={
@@ -93,4 +94,59 @@ class PwdForm(FlaskForm):
         ).first()
         if not admin.check_pwd(pwd):
             raise ValidationError("旧密码错误")
+
+class RegisterForm(FlaskForm):
+    account = StringField(
+        label="账户",
+        validators=[
+            DataRequired("please enter account")
+        ],
+        description="account",
+        render_kw={
+            "class":"form-control",
+            "placeholder":"enter account"
+        }
+    )
+    mobile = StringField(
+        label="mobile",
+        validators=[
+            DataRequired("please enter mobile number")
+        ],
+        description="mobile",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "enter mobile"
+        }
+    )
+    pwd = PasswordField(
+        label="password",
+        validators=[
+            DataRequired("please enter password")
+        ],
+        description="password",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "enter password"
+        }
+    )
+    repwd = PasswordField(
+        label="re-password",
+        validators=[
+            DataRequired("please re-enter password"),
+            EqualTo('pwd',message="both password is not the same.")
+        ],
+        description="passowrd",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "re-enter password"
+        }
+    )
+    submit = SubmitField(
+        "Add",
+        render_kw={
+            "class":"btn btn-primary"
+        }
+    )
+
+
 

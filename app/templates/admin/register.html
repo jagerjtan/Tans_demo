@@ -1,0 +1,88 @@
+{% extends "ui/adminbase.html" %}
+{% block title %} 添加成员 {% endblock %}
+
+{% block css %}
+    <style>
+        .nav {
+            padding: 0px;
+            margin: 0px;
+        }
+        .navbar-nav{
+            padding: 0px 15px;
+        }
+        .glyphicon{
+            font-size: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">添加新成员</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-group" method="post">
+                        <div class="form-group has-feedback">
+                            <label for="input_oldpwd">{{ form.account.label }}</label>
+                            {{ form.account }}
+                            {% for err in form.account.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="input_pwd">{{ form.mobile.label }}</label>
+                            {{ form.mobile }}
+                            {% for err in form.mobile.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="input_pwd">{{ form.pwd.label }}</label>
+                            {{ form.pwd }}
+                            {% for err in form.pwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="input_repwd">{{ form.repwd.label }}</label>
+                            {{ form.repwd }}
+                            {% for err in form.repwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                    {{ form.crsf_token }}
+                    {{ form.submit }}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </section>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block script %}{% endblock %}

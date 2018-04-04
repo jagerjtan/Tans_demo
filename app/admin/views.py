@@ -1,9 +1,9 @@
 # coding: utf8
 from functools import wraps
 from . import admin
-from app import db,app
+from app import db, app
 from flask import render_template, url_for, redirect, flash, request, session
-from app.admin.forms import LoginForm,PwdForm
+from app.admin.forms import LoginForm, PwdForm, RegisterForm
 from app.models import Admin, Adminlog
 
 
@@ -68,8 +68,15 @@ def pwd():
     return render_template("admin/pwd.html")
 
 
-@admin.route("/account/", methods=['GET','POST'])
+@admin.route("/account/", methods=['GET', 'POST'])
 @admin_login_req
 def account():
-    form1=PwdForm()
-    return render_template("admin/account.html",form1=form1)
+    form1 = PwdForm()
+    return render_template("admin/account.html", form1=form1)
+
+
+@admin.route("/register", methods=['GET', 'POST'])
+@admin_login_req
+def register():
+    form = RegisterForm()
+    return render_template("admin/register.html", form=form)
