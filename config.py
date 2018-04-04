@@ -21,7 +21,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 UP_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static/uploads/")
 
 # session加密所需要的随机参数
-SECRET_KEY = os.urandom(24)
+SECRET_KEY = b'\x01\x9c\xb4\xf3\x90s9\xff\x90\x18\xc9h`\xa5\x83\xfb\xeb\x1af\x07\x0c\xff\x16\x0e'
+# SECRET_KEY = os.urandom(24)
+# print(SECRET_KEY)
 
 # 设定session的过期时间
 PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)

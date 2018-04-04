@@ -6,16 +6,26 @@
             box-shadow: 0 3px 5px 3px #ebf2ff;
             height: 100%;
             margin-bottom: 9px;
-            padding:0px;
+            padding: 0px;
         }
 
         .myaccount-row {
             background: #ffffff;
-            {#height: 200px;#}
+        {#height: 200px;#}
         }
     </style>
 {% endblock %}
 {% block main %}
+    {% if form1.re_pwd.errors or form1.new_pwd.errors or form1.old_pwd.errors %}
+        <script>
+            $(function () {
+                $('#my1stModal').modal(
+                    'show'
+                )
+            });
+        </script>
+    {% endif %}
+
     <!-- Main Container-->
     <div class="container">
         <!-- 1s Row -->
@@ -23,9 +33,15 @@
             <!--1s Col-->
             <div class="col-md-3 col-md-offset-2 col-xs-12 mylogoinfo">
                 <!--头像-->
-                <div style="width:100%;height:160px;">头像</div><!--头像-->
+                <div style="width:100%;height:160px;">头像 {{ modal }}</div><!--头像-->
+                <div class="hidden-xs hidden-sm" style="height: 39.6px;">
+                    <a tabindex="0" class="btn btn-default" role="button"
+                       data-toggle="popover"
+                       data-placement="bottom" data-trigger="focus" data-html="True"
+                       data-content='<a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a>'>设置</a>
+                </div>
                 <!--折叠栏-->
-                <div class="panel-group" role="tablist" style="margin-bottom: 0px;">
+                <div class="panel-group hidden-md hidden-lg" role="tablist" style="margin-bottom: 0px;">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="collapseListGroupHeading1" style="text-align: center">
                             <h4 class="panel-title">
@@ -40,7 +56,8 @@
                              aria-labelledby="collapseListGroupHeading1" aria-expanded="true" style="">
                             <ul class="list-group">
                                 <li class="list-group-item"><a href="#">编辑个人信息</a></li>
-                                <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a></li>
+                                <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a>
+                                </li>
                                 <li class="list-group-item"><a href="#">等待修改</a></li>
                             </ul>
                             <div class="panel-footer">
@@ -54,7 +71,7 @@
             <!-- 2nd Col -->
             <div class="col-md-5 col-xs-12 mylogoinfo" style="height: 199.6px;">
                 <div style="padding-left: 5px"><p>名字</p>
-                <p>基本个人信息</p></div>
+                    <p>基本个人信息</p></div>
             </div><!--2nd Col-->
         </div><!--1st ROW-->
         <!-- 2nd Row -->
@@ -67,17 +84,18 @@
     </div><!--Main container-->
 
     <!-- my1stModal -->
-    <div class="modal fade" id="my1stModal" data-backdrop="static" tabindex="-1" role="dialog"
-         aria-labelledby="my1stModalLabel" style="margin-top: 60px;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button data-dismiss="modal" class="close" type="button"><span
-                            aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">修改密码</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-group" role="form" method="post">
+    <form class="form-group" role="form" method="POST">
+        <div class="modal fade" id="my1stModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="my1stModalLabel" style="margin-top: 60px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button data-dismiss="modal" class="close" type="button"><span
+                                aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">修改密码</h4>
+                    </div>
+
+                    <div class="modal-body">
                         <div class="form-group has-feedback">
                             <label for="input_oldpwd">{{ form1.old_pwd.label }}</label>
                             {{ form1.old_pwd }}
@@ -105,17 +123,16 @@
                                 </div>
                             {% endfor %}
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-                    {#                            <button class="btn btn-primary" type="button">提交</button>#}
-                    {{ form1.csrf_token }}
-                    {{ form1.submit }}
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!--my1stModal-->
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        {{ form1.csrf_token }}
+                        {{ form1.submit }}
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!--my1stModal-->
+    </form>
 
     {#    <!--可切换标签-->#}
     {#    <div style="margin-top: -5px;margin-left: -15px;">#}

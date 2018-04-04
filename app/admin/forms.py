@@ -45,14 +45,14 @@ class LoginForm(FlaskForm):
 
 class PwdForm(FlaskForm):
     old_pwd = PasswordField(
-        label="旧密码",
+        label="原密码",
         validators=[
-            DataRequired("请输入旧密码")
+            DataRequired("请输入原密码")
         ],
         description="旧密码",
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入旧密码"
+            "placeholder": "请输入原密码"
         }
     )
     new_pwd = PasswordField(
@@ -90,10 +90,11 @@ class PwdForm(FlaskForm):
         pwd = field.data
         name = session['admin']
         admin = Admin.query.filter_by(
-            name=name
+            account=name
         ).first()
         if not admin.check_pwd(pwd):
-            raise ValidationError("旧密码错误")
+            return None #无论正确与否均不设置提示，防止不停用错误密码来撞库
+            # raise ValidationError("旧密码错误")
 
 class RegisterForm(FlaskForm):
     account = StringField(

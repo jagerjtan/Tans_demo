@@ -3,16 +3,18 @@
 
 {% block css %}{% endblock %}
 {% block main %}
-<div class="container">
+    <div class="container">
         {#      登录表单#}
         <div class="row">
             <div class="col-md-4 col-xs-10 col-md-offset-4 col-xs-offset-1">
                 {% for msg in get_flashed_messages(category_filter=["ok"]) %}
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        <h4><i class="icon fa fa-check"></i>操作成功！</h4>
-                        {{ msg }}
-                    </div>
+                    {% if msg != 'online' %}
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <h4><i class="icon fa fa-check"></i>操作成功！</h4>
+                            {{ msg }}
+                        </div>
+                    {% endif %}
                 {% endfor %}
                 {% for msg in get_flashed_messages(category_filter=["err"]) %}
                     <div class="alert alert-danger alert-dismissible">

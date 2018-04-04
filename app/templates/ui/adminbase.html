@@ -32,8 +32,21 @@
             padding: 0px 15px;
         }
 
-        .btm-icon {
+        .btm-nav {
+            text-align: center;
+            padding: 0px;
+        }
+
+        .btm-nav ul li a {
+            padding-top: 5px;
+            padding-bottom: 0px;
             font-size: 20px;
+        }
+
+        .btm-nav p {
+            margin-bottom: 2px;
+            font-size: 10px;
+            color: #9d9d9d;
         }
     </style>
     {% block css %}{% endblock %}
@@ -72,13 +85,13 @@
             {#                </div>#}
             {#            </form>#}
             <ul class="nav navbar-nav navbar-left">
-                <li class="hidden-xs hidden-sm">
+                <li class="hidden-xs hidden-sm active">
                     <a class="curlink" href="{{ url_for('admin.index') }}"><span
                             class="glyphicon glyphicon-equalizer"></span>&nbsp;管理面板</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {% if "online" in get_flashed_messages(category_filter=["ok"]) %}
+                {% if get_flashed_messages(category_filter=["stat"]) %}
                     <li class="hidden-xs hidden-sm">
                         <a class="curlink" href="#">Online</a>
                     </li>
@@ -91,7 +104,6 @@
                                 class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                     </li>
                 {% else %}
-                    {#                {% if msg in get_flashed_messages(category_filter=["err"]) == 'offline' %}#}
                     <li>
                         <a class="curlink" href="{{ url_for('main.login') }}"><span
                                 class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a>
@@ -109,28 +121,38 @@
 </nav>
 {% block main %}{% endblock %}
 <nav class="navbar-fixed-bottom navbar-inverse hidden-lg hidden-md ">
-    <div class="container" align="center" style="padding:0px;">
+    <div class="container btm-nav">
         <div class="col-xs-4">
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="curlink" href="{{ url_for('admin.index') }}"><span class="glyphicon glyphicon-equalizer btm-icon"></span></a>
+                    <a class="curlink" href="{{ url_for('admin.index') }}"><span
+                            class="glyphicon glyphicon-equalizer"></span></a>
                 </li>
             </ul>
         </div>
         <div class="col-xs-4">
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="curlink" href="#"><span class="glyphicon glyphicon-align-justify btm-icon"></span></a>
+                    <a class="curlink" href="#"><span
+                            class="glyphicon glyphicon-align-justify"></span></a>
                 </li>
             </ul>
         </div>
         <div class="col-xs-4">
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="curlink" href="{{ url_for('admin.account') }}"><span class="glyphicon glyphicon-user btm-icon"></span></a>
+                    <a class="curlink" href="{{ url_for('admin.account') }}"><span
+                            class="glyphicon glyphicon-user"></span></a>
                 </li>
             </ul>
         </div>
+
+        <p class="col-xs-4 btm-icon-text">&nbsp;管理面板</p>
+
+        <p class="col-xs-4 btm-icon-text">&nbsp;控制台</p>
+
+        <p class="col-xs-4 btm-icon-text">&nbsp;我的</p>
+
     </div>
 </nav>
 <nav class="navbar navbar-default navbar-fixed-bottom hidden-xs hidden-sm">
@@ -139,5 +161,10 @@
     </div>
 </nav>
 </body>
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
 {% block script %}{% endblock %}
 </html>
