@@ -10,7 +10,7 @@ class Admin(db.Model):
     account = db.Column(db.String(100), unique=True)  # 管理员帐号
     nickname = db.Column(db.String(100), unique=True)  # 管理员昵称
     pwd = db.Column(db.String(100))
-    # is_super = db.Column(db.SmallInteger)
+    is_super = db.Column(db.SmallInteger)
     addtime = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # 添加时间
     adminlogs = db.relationship("Adminlog", backref='admin')
 
@@ -46,6 +46,8 @@ class Member(db.Model):
     face = db.Column(db.String(255), unique=True)  # 头像
     addtime = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # 添加时间
     uuid = db.Column(db.String(255), unique=True)  # 唯一标识符
+    birthday = db.Column(db.DateTime) #出生日期
+
     memberlogs = db.relationship('Memberlog', backref='member')  # 会员日志外键关系关联
 
     def __repr__(self):

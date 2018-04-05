@@ -90,3 +90,8 @@ def account():
 def register():
     form = RegisterForm()
     return render_template("admin/register.html", form=form)
+
+@admin.route("/memberlist",methods=['GET'])
+@admin_login_req
+def memberlist():
+    return render_template("admin/memberlist.html")

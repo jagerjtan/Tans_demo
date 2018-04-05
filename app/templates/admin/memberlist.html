@@ -1,10 +1,56 @@
 {% extends "ui/adminbase.html" %}
 {% block title %}成员列表{% endblock %}
-{% block css %}{% endblock %}
+{% block css %}
+    <style>
+        .membericon {
+            margin: 0 10%;
+            width:80%;
+            border-radius: 95%;
+        }
+    </style>
+{% endblock %}
 {% block main %}
-<section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-lg-8 col-lg-offset-2"
+                     style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 9px; padding:5px;">
+                    <div style="width: 30%; border-right: 1px solid black;float:left;">
+                        <img class="membericon" src="{{ url_for('static',filename='images/icons/888.jpg') }}" alt="">
+                    </div>
+                    <div style="width: 50%; border-right: 1px solid black;float: left">info</div>
+                    <div style="width: 20%;float: left;">action</div>
+                </div>
+                <div class="col-xs-12 col-lg-8 col-lg-offset-2"
+                     style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 9px; padding:5px;">
+                    <div style="width: 30%; border-right: 1px solid black;float:left;">
+                        <img class="membericon" src="{{ url_for('static',filename='images/icons/8881.jpg') }}" alt="">
 
-</section>
+                    </div>
+                    <div style="width: 50%; border-right: 1px solid black;float: left">info</div>
+                    <div style="width: 20%;float: left;">action</div>
+                </div>
+                <div class="col-xs-12 col-lg-8 col-lg-offset-2"
+                     style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 9px; padding:5px;">
+                    <div style="width: 30%; border-right: 1px solid black;float:left;">
+                        <img class="membericon" src="{{ url_for('static',filename='images/icons/8882.jpg') }}" alt="">
+
+                    </div>
+                    <div style="width: 50%; border-right: 1px solid black;float: left">info</div>
+                    <div style="width: 20%;float: left;">action</div>
+                </div>
+                <div class="col-xs-12 col-lg-8 col-lg-offset-2"
+                     style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 9px; padding:5px;">
+                    <div style="width: 30%; border-right: 1px solid black;float:left;">
+                        <img class="membericon" src="{{ url_for('static',filename='images/icons/8883.jpg') }}" alt="">
+
+                    </div>
+                    <div style="width: 50%; border-right: 1px solid black;float: left">info</div>
+                    <div style="width: 20%;float: left;">action</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 
