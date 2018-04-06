@@ -4,7 +4,9 @@ from . import admin
 from app import db, app
 from flask import render_template, url_for, redirect, flash, request, session
 from app.admin.forms import LoginForm, PwdForm, RegisterForm
-from app.models import Admin, Adminlog
+from app.models import Admin, Adminlog, Member
+import shutil
+from flask_sqlalchemy import SQLAlchemy
 
 
 # 访问限制装饰器
@@ -51,16 +53,16 @@ def login():
         # 待添加登录时间添加到日志数据库的操作
         #
         flash("登录成功！", "ok")
-        flash("online","stat")
+        flash("online", "stat")
         return redirect(request.args.get("next") or url_for("admin.index"))
     return render_template("admin/login.html", form=form)
 
 
 @admin.route("/logout", methods=['GET'])
 def logout():
-    session.pop("admin", None)
-    session.pop("admin_id", None)
-    print("logout,hhh")
+    # session.pop("admin", None)
+    # session.pop("admin_id", None)
+    session.clear()
     return redirect(url_for('admin.login'))
 
 
@@ -80,7 +82,7 @@ def account():
         admin.pwd = generate_password_hash(form1.data['new_pwd'])
         db.session.add(admin)
         db.session.commit()
-        flash("修改密码成功，请重新登录！","ok")
+        flash("修改密码成功，请重新登录！", "ok")
         return redirect(url_for("admin.logout"))
     return render_template("admin/account.html", form1=form1)
 
@@ -89,9 +91,39 @@ def account():
 @admin_login_req
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        data = form.data
+        if 'face' not in data:
+            face_name = 'default' + data['account'] + '.jpg'
+            shutil.copy(app.config['MEM_DIR'] + 'default.jpg', app.config['MEM_DIR'] + face_name)
+        if 'nickname' not in data:
+            nickname = data['account']
+        from werkzeug.security import generate_password_hash
+        member = Member(
+            account=data['account'],
+            nickname=nickname,
+            face=face_name,
+            mobile=data['mobile'],
+            pwd=generate_password_hash(data['pwd'])
+        )
+        try:
+            db.session.add(member)
+            db.session.commit()
+        except BaseException:
+            db.session.rollback()
+            flash("Error!","err")
+            return redirect(url_for("admin.memberlist", page=1))
+        flash("添加成员成功", "ok")
+        return redirect(url_for("admin.memberlist", page=1))
     return render_template("admin/register.html", form=form)
 
-@admin.route("/memberlist",methods=['GET'])
+
+@admin.route("/memberlist/<int:page>", methods=['GET'])
 @admin_login_req
-def memberlist():
-    return render_template("admin/memberlist.html")
+def memberlist(page=None):
+    if page == None:
+        page = 1
+    page_data = Member.query.order_by(
+        Member.id
+    ).paginate(page=page, per_page=5)
+    return render_template("admin/memberlist.html", page_data=page_data)

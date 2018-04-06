@@ -7,15 +7,15 @@
 
 {% block main %}
     <section>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
-                            class="sr-only">Close</span></button>
-                    <h4 class="modal-title">添加新成员</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-group" method="post">
+        <form class="form-group" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                                class="sr-only">Close</span></button>
+                        <h4 class="modal-title">添加新成员</h4>
+                    </div>
+                    <div class="modal-body">
                         <div class="form-group has-feedback">
                             <label for="input_oldpwd">{{ form.account.label }}</label>
                             {{ form.account }}
@@ -52,15 +52,15 @@
                                 </div>
                             {% endfor %}
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-                    {{ form.csrf_token }}
-                    {{ form.submit }}
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        {{ form.csrf_token }}
+                        {{ form.submit }}
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </form>
     </section>
 
 

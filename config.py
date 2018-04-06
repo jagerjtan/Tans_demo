@@ -19,6 +19,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # 设定上传文件的保存目录
 UP_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static/uploads/")
+MEM_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "app\\static\\uploads\\members\\")
+
 
 # session加密所需要的随机参数
 SECRET_KEY = b'\x01\x9c\xb4\xf3\x90s9\xff\x90\x18\xc9h`\xa5\x83\xfb\xeb\x1af\x07\x0c\xff\x16\x0e'

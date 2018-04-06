@@ -2,7 +2,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, ValidationError, EqualTo
-from app.models import Admin,Member
+from app.models import Admin, Member
 
 
 class LoginForm(FlaskForm):
@@ -43,6 +43,7 @@ class LoginForm(FlaskForm):
             return None
             # raise ValidationError("帐号和密码不匹配！") 这里不给提示是因为防止有人不断利用不存在的账号来检测存在的账号
 
+
 class PwdForm(FlaskForm):
     old_pwd = PasswordField(
         label="原密码",
@@ -70,7 +71,7 @@ class PwdForm(FlaskForm):
         label="确认密码",
         validators=[
             DataRequired("请确认新密码"),
-            EqualTo("new_pwd","两次密码输入不一致！")
+            EqualTo("new_pwd", "两次密码输入不一致！")
         ],
         description="确认密码",
         render_kw={
@@ -93,8 +94,9 @@ class PwdForm(FlaskForm):
             account=name
         ).first()
         if not admin.check_pwd(pwd):
-            return None #无论正确与否均不设置提示，防止不停用错误密码来撞库
+            return None  # 无论正确与否均不设置提示，防止不停用错误密码来撞库
             # raise ValidationError("旧密码错误")
+
 
 class RegisterForm(FlaskForm):
     account = StringField(
@@ -104,8 +106,8 @@ class RegisterForm(FlaskForm):
         ],
         description="account",
         render_kw={
-            "class":"form-control",
-            "placeholder":"enter account"
+            "class": "form-control",
+            "placeholder": "enter account"
         }
     )
     mobile = StringField(
@@ -134,7 +136,7 @@ class RegisterForm(FlaskForm):
         label="re-password",
         validators=[
             DataRequired("please re-enter password"),
-            EqualTo('pwd',message="both password is not the same.")
+            EqualTo('pwd', message="both password is not the same.")
         ],
         description="passowrd",
         render_kw={
@@ -145,13 +147,12 @@ class RegisterForm(FlaskForm):
     submit = SubmitField(
         "Add",
         render_kw={
-            "class":"btn btn-primary"
+            "class": "btn btn-primary"
         }
     )
+
     def validate_account(self, field):
         account = field.data
         member = Member.query.filter_by(account=account).count()
-        if member >0:
+        if member > 0:
             raise ValidationError("账户已存在")
-
-
