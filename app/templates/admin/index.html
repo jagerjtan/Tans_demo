@@ -4,40 +4,68 @@
 {% block title %}Core{% endblock %}
 
 {% block css %}
+    <style>
+        .info-div {
+            padding: 0px;
+        }
 
+        .info-content {
+            height: 300px;
+            padding: 15px;
+            border-left: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+            border-right: 1px solid #dddddd;
+        }
+    </style>
 {% endblock %}
 
 
 {% block sidebar %}
-    {% include "ui/sidebar.html" %}
+    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
+        {% include "ui/sidebar.html" %}
+    </div>
 {% endblock %}
 
 
 {% block main %}
     <section>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-lg-8 col-md-8">
-                <div>
-                    <div align="center" class="jumbotron">
-                        hi
+            <div class="col-xs-12 col-sm-12 col-lg-10 col-md-8 info-div">
+                <ul id="mytab" class="nav nav-tabs">
+                    <li class="active"><a href="#content1" data-toggle="tab">Overview</a></li>
+                    <li><a href="#content2" data-toggle="tab">活动日历</a></li>
+                    <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content info-content">
+                    <div class="tab-pane fade in active" id="content1">
+                        <div style="text-align: right;width:50%;float: left;">
+                            <h4><a href="#">服务器状态</a></h4>
+                            <h4><a href="#">查看Tan信息</a></h4>
+                            <h4><a href="#">查看成员信息</a></h4>
+                        </div>
+                        <div style="text-align: left; padding-left: 20px;width: 50%; float: left;">
+                            <h4><a href="#" style="color: red;">X</a></h4>
+                            <h4><a href="#" style="color: red;">X</a></h4>
+                            <h4><a href="#" style="color: red;">X</a></h4>
+                        </div>
                     </div>
-                    <h2 id="section-1">第一部分</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at,
-                        luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum id
-                        metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet
-                        sagittis.
-                        In tincidunt orci sit amet elementum vestibulum. Vivamus fermentum in arcu in aliquam.
-                        Quisque
-                        aliquam porta odio in fringilla. Vivamus nisl leo, blandit at bibendum eu, tristique eget
-                        risus.
-                        Integer aliquet quam ut elit suscipit, id interdum neque porttitor. Integer faucibus
-                        ligula.</p>
-                    <hr>
-                    <div align="center"><h4><a href="#" style="color: orangered;">后台主页</a></h4></div>
-                    <div align="center"><h4><a href="#">服务器状态</a></h4></div>
-                    <div align="center"><h4><a href="#">查看Tan信息</a></h4></div>
-                    <div align="center"><h4><a href="{{ url_for('admin.memberlist',page=1) }}">成员列表</a></h4></div>
-                    <div align="center"><h4><a href="#">查看成员信息</a></h4></div>
+                    <div class="tab-pane" id="content2">
+                        <h2 id="section-1">第一部分</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at,
+                            luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum id
+                            metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet
+                            sagittis.
+                            In tincidunt orci sit amet elementum vestibulum. Vivamus fermentum in arcu in aliquam.
+                            Quisque
+                            aliquam porta odio in fringilla. Vivamus nisl leo, blandit at bibendum eu, tristique eget
+                            risus.
+                            Integer aliquet quam ut elit suscipit, id interdum neque porttitor. Integer faucibus
+                            ligula.</p>
+                        <hr>
+                    </div>
+                    <div class="tab-pane" id="content3">
+                        <p>Insert verbose log</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,6 +77,8 @@
     <script>
         $(document).ready(function () {
             $("#section-1").addClass("active");
+            $("#n-1").addClass("active");
+            $("#bn-1").addClass("active");
         });
     </script>
 {% endblock %}

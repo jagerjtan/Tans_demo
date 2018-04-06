@@ -18,8 +18,11 @@
 
 
 {% block sidebar %}
+    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
     {% include "ui/sidebar.html" %}
+    </div>
 {% endblock %}
+
 
 {% block main %}
     <section>
@@ -59,6 +62,7 @@
     <script>
         $(document).ready(function () {
             $("#section-3").addClass("active");
+            $("#bn-2").addClass("active");
         });
     </script>
 {% endblock %}

@@ -91,9 +91,9 @@
             {#                </div>#}
             {#            </form>#}
             <ul class="nav navbar-nav navbar-left">
-                <li class="hidden-xs hidden-sm active">
+                <li id="n-1" class="hidden-xs hidden-sm">
                     <a class="curlink" href="{{ url_for('admin.index') }}"><span
-                            class="glyphicon glyphicon-equalizer"></span>&nbsp;管理面板</a>
+                            class="glyphicon glyphicon-equalizer"></span>&nbsp;Tan's</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -101,13 +101,13 @@
                     <li class="hidden-xs hidden-sm">
                         <a class="curlink" href="#">Online</a>
                     </li>
-                    <li class="hidden-xs hidden-sm">
+                    <li id="n-2" class="hidden-xs hidden-sm">
                         <a class="curlink" href="{{ url_for('admin.account',id=1) }}"><span
-                                class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
+                                class="glyphicon glyphicon-user"></span>&nbsp;Personal</a>
                     </li>
                     <li>
                         <a class="curlink" href="{{ url_for('admin.logout') }}"><span
-                                class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
+                                class="glyphicon glyphicon-log-out"></span>&nbsp;Signoff</a>
                     </li>
                 {% else %}
                     <li>
@@ -162,10 +162,8 @@
 
 <!--Main Frame-->
 <div class="container">
-    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
-        {% block sidebar %}{% endblock %}
-    </div>
-    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+    {% block sidebar %}{% endblock %}
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0px;">
         {% block main %}{% endblock %}
     </div>
 </div>
@@ -176,9 +174,9 @@
 <!--移动端-->
 <nav class="navbar-fixed-bottom navbar-inverse hidden-lg hidden-md ">
     <div class="container btm-nav">
-        <div class="col-xs-4">
+        <div class="col-xs-4 col-sm-3 col-sm-offset-2">
             <ul class="nav navbar-nav">
-                <li>
+                <li id="bn-1">
                     <a class="btn" href="{{ url_for('admin.index') }}">
                         <span class="glyphicon glyphicon-equalizer btm-logo"></span>
                         <br>
@@ -187,27 +185,27 @@
                 </li>
             </ul>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-4 col-sm-3">
             <ul class="nav navbar-nav">
-                <li>
+                <li id="bn-2">
                     <a tabindex="0" class="btn" role="button"
                        data-toggle="popover"
                        data-placement="top" data-trigger="focus" data-html="True"
-                       data-content='<div class="btm-pop"><ul><li><a href="#">Core设置</a></li><li><a href="{{ url_for('admin.test') }}">test</a></li><li><a href="{{ url_for("admin.memberlist",page=1) }}">成员</a></li></ul></div>'>
+                       data-content='<div class="btm-pop"><ul><li><a href="#">Core Console</a></li><li><a href="{{ url_for('admin.test') }}">test</a></li><li><a href="{{ url_for("admin.memberlist",page=1) }}">成员</a></li></ul></div>'>
                         <span class="glyphicon glyphicon-align-justify btm-logo"></span>
                         <br>
-                        <span class="btm-text">控制台</span>
+                        <span class="btm-text">Console</span>
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-4 col-sm-3">
             <ul class="nav navbar-nav">
-                <li>
+                <li id="bn-3">
                     <a class="btn" href="{{ url_for('admin.account',id=1) }}">
                         <span class="glyphicon glyphicon-user btm-logo"></span>
                         <br>
-                        <span class="btm-text">我的</span>
+                        <span class="btm-text">Mine</span>
                     </a>
                 </li>
             </ul>
@@ -217,7 +215,9 @@
 <!--桌面端-->
 <nav class="navbar navbar-default navbar-fixed-bottom hidden-xs hidden-sm">
     <div style="text-align:center">
-        继承自父模板 - adminbase.html
+        <strong>© 2018 J.T. Precision</strong>
+        <br>
+        <small>继承自父模板 - adminbase.html</small>
     </div>
 </nav>
 </body>
