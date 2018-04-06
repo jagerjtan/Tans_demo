@@ -1,7 +1,12 @@
 {% extends "ui/adminbase.html" %}
-{% block title %}{% endblock %}
+{% block title %} 个人信息 {% endblock %}
 {% block css %}
     <style>
+        .myaccount-row {
+            background: #ffffff;
+        {#height: 200px;#}
+        }
+
         .mylogoinfo {
             box-shadow: 0 3px 5px 3px #ebf2ff;
             height: 100%;
@@ -9,43 +14,71 @@
             padding: 0px;
         }
 
-        .myaccount-row {
-            background: #ffffff;
-        {#height: 200px;#}
+        #mylogo {
+            margin: auto;
+            position: relative;
+            display: block;
+            padding: 10px;
+            height: 100%;
+        }
+
+        #logo-btn {
+            width: 55px;
+            margin: auto;
+            position: relative;
+            display: block;
+            height: 100%;
+        }
+
+        #setting-pop {
+            width: 100px;
         }
     </style>
 {% endblock %}
+
+{% block sidebar %}
+    {% include "ui/sidebar.html" %}
+{% endblock %}
 {% block main %}
     <!--捕捉修改密码表单的错误信息，显示模态框-->
-    {% if form1.re_pwd.errors or form1.new_pwd.errors or form1.old_pwd.errors %}
-        <script>
-            $(function () {
-                $('#my1stModal').modal(
-                    'show'
-                )
-            });
-        </script>
-    {% endif %}
-    <!--错误消息捕捉-->
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+            {% if form1.re_pwd.errors or form1.new_pwd.errors or form1.old_pwd.errors %}
+                <script>
+                    $(function () {
+                        $('#my1stModal').modal(
+                            'show'
+                        )
+                    });
+                </script>
+            {% endif %}
+        </div>
+    </div><!--错误消息捕捉-->
 
-    <!-- Main Container-->
-    <div class="container">
+    <!--Main-->
+    <section>
         <!-- 1s Row -->
         <div class="row myaccount-row">
             <!--1s Col-->
-            <div class="col-md-3 col-md-offset-2 col-xs-12 mylogoinfo">
+            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12 mylogoinfo">
                 <!--头像-->
-                <div style="width:100%;height:160px;">头像</div><!--头像-->
-                <div class="hidden-xs hidden-sm" style="height: 39.6px;">
-                    <a tabindex="0" class="btn btn-default" role="button"
-                       data-toggle="popover"
-                       data-placement="bottom" data-trigger="focus" data-html="True"
-                       data-content='<a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a>'>设置</a>
+                <div style="width:100%;height:160px;">
+                    <img id="mylogo"
+                         src="{{ url_for('static',filename='uploads/members/888.jpg') }}" alt="">
+                </div><!--头像-->
+                <div class="hidden-xs hidden-sm" style="height: 40px;">
+                    <div id="logo-btn">
+                        <a tabindex="0" class="btn btn-default" role="button"
+                           data-toggle="popover"
+                           data-placement="bottom" data-trigger="focus" data-html="True"
+                           data-content='<div id="setting-pop"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a></div>'>设置</a>
+                    </div>
                 </div>
                 <!--折叠栏-->
                 <div class="panel-group hidden-md hidden-lg" role="tablist" style="margin-bottom: 0px;">
                     <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="collapseListGroupHeading1" style="text-align: center">
+                        <div class="panel-heading" role="tab" id="collapseListGroupHeading1"
+                             style="text-align: center">
                             <h4 class="panel-title">
                                 <a class="" role="button" data-toggle="collapse" href="#collapseListGroup1"
                                    aria-expanded="true"
@@ -58,7 +91,8 @@
                              aria-labelledby="collapseListGroupHeading1" aria-expanded="true" style="">
                             <ul class="list-group">
                                 <li class="list-group-item"><a href="#">编辑个人信息</a></li>
-                                <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a>
+                                <li class="list-group-item"><a href="#" data-toggle="modal"
+                                                               data-target="#my1stModal">修改密码</a>
                                 </li>
                                 <li class="list-group-item"><a href="#">等待修改</a></li>
                             </ul>
@@ -71,19 +105,21 @@
                 </div><!--折叠栏-->
             </div><!--1st col-->
             <!-- 2nd Col -->
-            <div class="col-md-5 col-xs-12 mylogoinfo" style="height: 199.6px;">
-                <div style="padding-left: 5px"><p>名字</p>
-                    <p>基本个人信息</p></div>
+            <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12 mylogoinfo" style="height: 200px;">
+                <div style="padding-left: 5px">
+                    <p>Admin:{{ data.name }}</p>
+                    <p>Last login time:{{ data.last_login }}</p>
+                    <p>Last login ip:{{ data.ip }}</p>
+                </div>
             </div><!--2nd Col-->
         </div><!--1st ROW-->
         <!-- 2nd Row -->
         <div class="row myaccount-row">
-            <div class="col-md-8 col-md-offset-2 col-xs-12 mylogoinfo">
+            <div class="col-md-12 col-lg-12 col-xs-12 mylogoinfo">
                 <p>饼状图</p>
                 <p>主要信息</p>
             </div>
-        </div><!--2nd ROW-->
-    </div><!--Main container-->
+        </div><!--2nd ROW--></section>
 
     <!-- my1stModal -->
     <form class="form-group" role="form" method="POST">
@@ -136,22 +172,6 @@
         </div><!--my1stModal-->
     </form>
 
-    {#    <!--可切换标签-->#}
-    {#    <div style="margin-top: -5px;margin-left: -15px;">#}
-    {#        <ul id="mytab" class="nav nav-tabs">#}
-    {#            <li class="active"><a href="#logoinfo" data-toggle="tab">头像</a></li>#}
-    {#            <li><a href="#editinfo" data-toggle="tab">设置</a></li>#}
-    {#        </ul>#}
-    {#        <div id="myTabContent" class="tab-content">#}
-    {#            <div class="tab-pane fade in active" id="logoinfo">此处插入头像</div>#}
-    {#            <div class="tab-pane" id="editinfo">#}
-    {#                <p>此处插入修改密码编辑个人信息</p>#}
-    {#                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my1stModal">#}
-    {#                    修改密码#}
-    {#                </button><!--my1stModal Button-->#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div><!--可切换标签-->#}
 
 {% endblock %}
 {% block script %}

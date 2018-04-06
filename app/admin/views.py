@@ -14,10 +14,10 @@ def admin_login_req(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if "admin" in session and "admin_id" in session:
-            flash("online", "stat")
+            flash("online", "stat1")
             return f(*args, **kwargs)
         else:
-            flash("offline", "err")
+            flash("offline", "stat2")
             return redirect(url_for("admin.login", next=request.url))
 
     return decorated_function
@@ -49,9 +49,6 @@ def login():
         )
         db.session.add(adminlog)
         db.session.commit()
-        #
-        # 待添加登录时间添加到日志数据库的操作
-        #
         flash("登录成功！", "ok")
         flash("online", "stat")
         return redirect(request.args.get("next") or url_for("admin.index"))
@@ -62,29 +59,47 @@ def login():
 def logout():
     # session.pop("admin", None)
     # session.pop("admin_id", None)
-    session.clear()
+    if '_flashes' in session:
+        msg = session['_flashes']
+        session.clear()
+        session['_flashes']=msg
+    else:
+        session.clear()
+    flash("You've logged out.","ok")
     return redirect(url_for('admin.login'))
 
 
-@admin.route("/pwd/", methods=['GET', 'POST'])
+@admin.route("/test/", methods=['GET', 'POST'])
 @admin_login_req
-def pwd():
-    return render_template("admin/pwd.html")
+def test():
+    return render_template("admin/test.html")
 
 
-@admin.route("/account/", methods=['GET', 'POST'])
+@admin.route("/account/<int:id>", methods=['GET', 'POST'])
 @admin_login_req
-def account():
+def account(id=None):
+    data={}
+    if id == None:
+        id = int(session['admin_id'])
+    try:
+        admin = Admin.query.filter_by(account=session['admin']).first()
+        last_adminlogin= admin.adminlogs[-1]
+        data = {
+            'name': admin.account,
+            'last_login': last_adminlogin.addtime,
+            'ip':last_adminlogin.ip
+        }
+    except BaseException as e:
+        flash(e,"err")
     form1 = PwdForm()
     if form1.validate_on_submit():
         from werkzeug.security import generate_password_hash
-        admin = Admin.query.filter_by(account=session['admin']).first()
         admin.pwd = generate_password_hash(form1.data['new_pwd'])
         db.session.add(admin)
         db.session.commit()
         flash("修改密码成功，请重新登录！", "ok")
         return redirect(url_for("admin.logout"))
-    return render_template("admin/account.html", form1=form1)
+    return render_template("admin/account.html", id=id,form1=form1, data=data)
 
 
 @admin.route("/register", methods=['GET', 'POST'])
@@ -111,7 +126,7 @@ def register():
             db.session.commit()
         except BaseException:
             db.session.rollback()
-            flash("Error!","err")
+            flash("Error!", "err")
             return redirect(url_for("admin.memberlist", page=1))
         flash("添加成员成功", "ok")
         return redirect(url_for("admin.memberlist", page=1))

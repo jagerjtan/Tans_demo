@@ -1,10 +1,8 @@
-<div class="col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 hidden-xs" id="myScrollSpy">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/sidebar.css') }}">
-    <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="128">
-        <li id="section-1"><a href="{{ url_for('admin.index') }}">信息面板</a></li>
-        <li id="seciont-2"><a href="{{ url_for('admin.index') }}">Core 设置</a></li>
-        <li id="section-3"><a href="{{ url_for('admin.memberlist',page=1) }}">成员</a></li>
-        <li id="section-4"><a href="{{ url_for('admin.index') }}">4</a></li>
-        <li id="seciton-5"><a href="{{ url_for('admin.index') }}">5</a></li>
-    </ul>
-</div>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/sidebar.css') }}">
+<ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="0">
+    <li id="section-1"><a href="{{ url_for('admin.index') }}">信息面板</a></li>
+    <li id="seciont-2"><a href="{{ url_for('admin.index') }}">Core设置</a></li>
+    <li id="section-3"><a href="{{ url_for('admin.memberlist',page=1) }}">成员</a></li>
+    <li id="section-4"><a href="{{ url_for('admin.test') }}">test</a></li>
+    <li id="seciton-5"><a href="{{ url_for('admin.index') }}">5</a></li>
+</ul>

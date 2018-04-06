@@ -3,60 +3,42 @@
 
 {% block css %}{% endblock %}
 {% block main %}
-    <div class="container">
-        {#      登录表单#}
-        <div class="row">
-            <div class="col-md-4 col-xs-10 col-md-offset-4 col-xs-offset-1">
-                <!--消息提示-->
-                {% for msg in get_flashed_messages(category_filter=["ok"]) %}
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        <h4><i class="icon fa fa-check"></i>操作成功！</h4>
-                        {{ msg }}
-                    </div>
-                {% endfor %}
-                {% for msg in get_flashed_messages(category_filter=["err"]) %}
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4><i class="icon fa fa-ban"></i> 操作失败！</h4>
-                        {{ msg }}
-                    </div>
-                {% endfor %}
-                <!--消息提示-->
-                <!--表单内核-->
-                <form class="form-signin" method="post">
-                    <h2 class="form-signin-heading">登录</h2>
-                    <div class="form-group has-feedback">
-                        {{ form.account }}
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                        {% for err in form.account.errors %}
-                            <div class="col-md-12">
-                                <p style="color: red">{{ err }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="form-group has-feedback">
-                        {{ form.pwd }}
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                        {% for err in form.pwd.errors %}
-                            <div class="col-md-12">
-                                <p style="color: red">{{ err }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-8">
+    {#      登录表单#}
+    <div class="row">
+        <div class="col-xs-10 col-sm-10 col-md-6 col-lg-4 col-md-offset-2 col-lg-offset-2 col-xs-offset-1 col-sm-offset-1">
+            <!--表单内核-->
+            <form class="form-signin" method="post">
+                <h2 class="form-signin-heading">登录</h2>
+                <div class="form-group has-feedback">
+                    {{ form.account }}
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    {% for err in form.account.errors %}
+                        <div class="col-md-12">
+                            <p style="color: red">{{ err }}</p>
                         </div>
-                        <div class="col-xs-4">
-                            {{ form.submit }}
-                            {{ form.csrf_token }}
+                    {% endfor %}
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.pwd }}
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    {% for err in form.pwd.errors %}
+                        <div class="col-md-12">
+                            <p style="color: red">{{ err }}</p>
                         </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
                     </div>
-                </form>
-                <!-- 表单内核-->
-            </div>
+                    <div class="col-xs-4">
+                        {{ form.submit }}
+                        {{ form.csrf_token }}
+                    </div>
+                </div>
+            </form>
+            <!-- 表单内核-->
         </div>
-        {#      登录表单#}
-    </div> <!-- /container -->
+    </div>
+    {#      登录表单#}
 {% endblock %}
 {% block script %}{% endblock %}

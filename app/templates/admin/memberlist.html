@@ -1,101 +1,60 @@
 {% extends "ui/adminbase.html" %}
+
+
 {% block title %}成员列表{% endblock %}
+
+
 {% block css %}
     <style>
         .membericon {
-            margin: 0 10%;
             width: 80%;
             border-radius: 95%;
+            margin: auto;
+            position: relative;
+            display: block;
         }
     </style>
 {% endblock %}
+
+
+{% block sidebar %}
+    {% include "ui/sidebar.html" %}
+{% endblock %}
+
 {% block main %}
     <section>
-        {% for msg in get_flashed_messages() %}
-            {% if msg != 'online' %}
-                <script>
-                    $(function () {
-                        $('#my1stModal').modal(
-                            'show'
-                        )
-                    });
-                </script>
-            {% endif %}
-        {% endfor %}
-    </section>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding: 0px 5px;">
+                <div class="col-xs-12 col-lg-9"
+                     style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 10px;padding:5px;">
+                    <a class="btn btn-primary" href="{{ url_for('admin.register') }}">添加成员</a>
+                </div>
 
-    <section>
-        <div class="container">
-            <div class="row">
-                {% include "ui/sidebar.html" %}
-
-                <div class="col-xs-12 col-lg-9" style="padding: 0px 5px;">
+                {% for v in page_data.items %}
                     <div class="col-xs-12 col-lg-9"
                          style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 10px;padding:5px;">
-                        <a class="btn btn-primary" href="{{ url_for('admin.register') }}">添加成员</a>
-                    </div>
-
-                    {% for v in page_data.items %}
-                        <div class="col-xs-12 col-lg-9"
-                             style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 10px;padding:5px;">
-                            <div style="width: 30%; border-right: 1px solid black;float:left;">
-                                <img class="membericon" src="{{ url_for('static',filename='uploads/members/'+v.face) }}"
-                                     alt="">
-                            </div>
-                            <div style="width: 50%; border-right: 1px solid black;float: left">
-                                <p>Nickname: {{ v.nickname }}</p>
-                                <p>Mobile: {{ v.mobile }}</p>
-                            </div>
-
-
-                            <div style="width: 20%;float: left;">
-                                <a href="#">查看</a><br>
-                                <a href="#">冻结/解除</a>
-                            </div>
+                        <div style="width: 30%; border-right: 1px solid black;float:left;">
+                            <img class="membericon" src="{{ url_for('static',filename='uploads/members/'+v.face) }}"
+                                 alt="">
                         </div>
-                    {% endfor %}
-                </div>
+                        <div style="width: 50%; border-right: 1px solid black;float: left">
+                            <p>Nickname: {{ v.nickname }}</p>
+                            <p>Mobile: {{ v.mobile }}</p>
+                        </div>
+
+
+                        <div style="width: 20%;float: left;">
+                            <a href="#">查看</a><br>
+                            <a href="#">冻结/解除</a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </section>
-
-
-    <div class="modal " id="my1stModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
-                            class="sr-only">Close</span></button>
-                    <h4 class="modal-title">提示消息</h4>
-                </div>
-                <div class="modal-body">
-                    {% for msg in get_flashed_messages(category_filter=["ok"]) %}
-                        {% if msg != 'online' %}
-                            <div class="alert alert-success alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                                <h4><i class="icon fa fa-check"></i>操作成功！</h4>
-                                {{ msg }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    {% for msg in get_flashed_messages(category_filter=["err"]) %}
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <h4><i class="icon fa fa-ban"></i> 操作失败！</h4>
-                            {{ msg }}
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-
-
-
 {% endblock %}
+
+
 {% block script %}
     <script>
         $(document).ready(function () {

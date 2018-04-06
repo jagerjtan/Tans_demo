@@ -40,7 +40,7 @@ class LoginForm(FlaskForm):
         account = field.data
         admin = Admin.query.filter_by(account=account).count()
         if admin == 0:
-            return None
+            raise ValidationError("账号和密码不匹配！")
             # raise ValidationError("帐号和密码不匹配！") 这里不给提示是因为防止有人不断利用不存在的账号来检测存在的账号
 
 
@@ -94,8 +94,8 @@ class PwdForm(FlaskForm):
             account=name
         ).first()
         if not admin.check_pwd(pwd):
-            return None  # 无论正确与否均不设置提示，防止不停用错误密码来撞库
-            # raise ValidationError("旧密码错误")
+            print('haha')
+            raise ValidationError("操作有误！")
 
 
 class RegisterForm(FlaskForm):

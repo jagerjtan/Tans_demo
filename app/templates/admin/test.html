@@ -1,0 +1,162 @@
+{% extends "ui/adminbase.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+    <style>
+        .mylogoinfo {
+            box-shadow: 0 3px 5px 3px #ebf2ff;
+            height: 100%;
+            margin-bottom: 9px;
+        }
+
+        .myaccount-row {
+            background: #ffffff;
+            height: 200px;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="col-lg-4">
+            <menu>
+                <ul style="list-style: none;padding:0;">
+                    <li>Red</li>
+                    <li>blue</li>
+                </ul>
+            </menu>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseThree"
+                           aria-expanded="false" aria-controls="collapseThree">
+                            Collapsible Group Item #3
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#">1</a></li>
+                        <li class="list-group-item"><a href="#">1</a></li>
+                        <li class="list-group-item"><a href="#">1</a></li>
+                        <li class="list-group-item"><a href="#">1</a></li>
+                        <li class="list-group-item"><a href="#">1</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel-group" role="tablist">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="collapseListGroupHeading1">
+                        <h4 class="panel-title">
+                            <a class="" role="button" data-toggle="collapse" href="#collapseListGroup1"
+                               aria-expanded="true"
+                               aria-controls="collapseListGroup1">
+                                编辑信息
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel"
+                         aria-labelledby="collapseListGroupHeading1" aria-expanded="true" style="">
+                        <ul class="list-group">
+                            <li class="list-group-item">Bootply</li>
+                            <li class="list-group-item">One itmus ac facilin</li>
+                            <li class="list-group-item">Second eros</li>
+                        </ul>
+                        <div class="panel-footer">
+                            <span class="glyphicon glyphicon-menu-up"></span>
+                            <a href="#collapseListGroup1" data-toggle="collapse" style="color: black">收起</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                <!--Panel1-->
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                               aria-expanded="true" aria-controls="collapseOne">
+                                Collapsible Group Item #1
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                            squid.
+                            3
+                            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                            laborum
+                            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
+                            nulla
+                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                            nesciunt
+                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+                            accusamus
+                            labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+
+                <!--Panel2-->
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Collapsible Group Item #2
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                            squid.
+                            3
+                            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                            laborum
+                            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
+                            nulla
+                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                            nesciunt
+                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+                            accusamus
+                            labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#    <!--可切换标签-->#}
+    {#    <div style="margin-top: -5px;margin-left: -15px;">#}
+    {#        <ul id="mytab" class="nav nav-tabs">#}
+    {#            <li class="active"><a href="#logoinfo" data-toggle="tab">头像</a></li>#}
+    {#            <li><a href="#editinfo" data-toggle="tab">设置</a></li>#}
+    {#        </ul>#}
+    {#        <div id="myTabContent" class="tab-content">#}
+    {#            <div class="tab-pane fade in active" id="logoinfo">此处插入头像</div>#}
+    {#            <div class="tab-pane" id="editinfo">#}
+    {#                <p>此处插入修改密码编辑个人信息</p>#}
+    {#                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my1stModal">#}
+    {#                    修改密码#}
+    {#                </button><!--my1stModal Button-->#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div><!--可切换标签-->#}
+{% endblock %}
+{% block script %}
+
+{% endblock %}
