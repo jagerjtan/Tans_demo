@@ -1,6 +1,6 @@
 # coding: utf8
 
-from flask import redirect,flash,session,url_for
+from flask import redirect,flash,session,url_for,request
 from functools import wraps
 
 # Admin访问限制装饰器

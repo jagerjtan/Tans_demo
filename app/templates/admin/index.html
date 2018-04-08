@@ -13,8 +13,7 @@
         }
 
         .info-content {
-        {#height: 600px;#}
-        {#    padding: 15px;#}
+            padding-top: 20px;
             border-left: 1px solid #dddddd;
             border-bottom: 1px solid #dddddd;
             border-right: 1px solid #dddddd;
@@ -41,7 +40,9 @@
                 </ul>
                 <div id="myTabContent" class="tab-content info-content">
                     <div class="tab-pane fade in active" id="content1">
-                            <div id="mytest" style="height:500px;">{{ myechart|safe }}</div>
+                        <div id="mytest1" style="height:500px;">
+                            {{ myechart|safe }}
+                        </div>
                     </div>
                     <div class="tab-pane" id="content2">
                         <h2 id="section-100">第一部分</h2>
@@ -93,14 +94,10 @@
 
 {% block script %}
     <script type="text/javascript">
-        cpus = document.getElementById('cpus');
-        var mytest = echarts.getInstanceByDom(cpus);
+        OW = document.getElementById('serverow');
+        var statchart = echarts.getInstanceByDom(OW);
 
-        var time = ["", "", "", "", "", "", "", ""],
-            cpu1 = [0, 0, 0, 0, 0, 0, 0, 0],
-            cpu2 = [0, 0, 0, 0, 0, 0, 0, 0],
-            cpu3 = [0, 0, 0, 0, 0, 0, 0, 0],
-            cpu4 = [0, 0, 0, 0, 0, 0, 0, 0]
+        var v1 = [0, 0, 0]
 
         //准备好统一的 callback 函数
         var update_mychart = function (res) { //res是json格式的response对象
@@ -109,36 +106,15 @@
             {#mytest.hideLoading();#}
 
             // 准备数据
-            time.push(res.data[0]);
-            cpu1.push(parseFloat(res.data[1]));
-            cpu2.push(parseFloat(res.data[2]));
-            cpu3.push(parseFloat(res.data[3]));
-            cpu4.push(parseFloat(res.data[4]));
-            if (time.length >= 8) {
-                time.shift();
-                cpu1.shift();
-                cpu2.shift();
-                cpu3.shift();
-                cpu4.shift();
-            }
+            v1[0] = parseFloat(res.data[1]);
+            v1[1] = parseFloat(res.data[2]);
+            v1[2] = parseFloat(res.data[3]);
 
             // 填入数据
-            mytest.setOption({
-                xAxis: {
-                    data: time
-                },
+            statchart.setOption({
                 series: [{
-                    name: 'cpu1', // 根据名字对应到相应的系列
-                    data: cpu1
-                }, {
-                    name: 'cpu2',
-                    data: cpu2
-                }, {
-                    name: 'cpu3',
-                    data: cpu3
-                }, {
-                    name: 'cpu4',
-                    data: cpu4
+                    name: 'Win10', // 根据名字对应到相应的系列
+                    data: v1
                 }]
             });
 
@@ -146,7 +122,7 @@
 
         // 建立socket连接，等待服务器“推送”数据，用回调函数更新图表
         $(document).ready(function () {
-            namespace = '/test';
+            namespace = '/serverow';
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
             socket.on('server_response', function (res) {
@@ -154,6 +130,7 @@
             });
 
         });
+
     </script>
     <script>
         $(document).ready(function () {

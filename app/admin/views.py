@@ -7,14 +7,14 @@ from app.admin.forms import LoginForm, PwdForm, RegisterForm
 from app.models import Admin, Adminlog, Member
 from app.decorators import admin_login_req
 from app.socketios import socketio
-from app.charts import test_graph
+from app.charts import server_status
 import shutil
 
 
 @admin.route("/", methods=['GET'])
 @admin_login_req
 def index():
-    return render_template("admin/index.html", async_mode=socketio.async_mode, myechart=test_graph())
+    return render_template("admin/index.html", async_mode=socketio.async_mode, myechart=server_status())
 
 
 @admin.route("/login/", methods=['GET', 'POST'])
