@@ -29,3 +29,10 @@ SECRET_KEY = b'\x01\x9c\xb4\xf3\x90s9\xff\x90\x18\xc9h`\xa5\x83\xfb\xeb\x1af\x07
 
 # 设定session的过期时间
 PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
+
+# 原始绑于app.__init__里面的参数
+# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:chiaki2008@127.0.0.1:3306/movie"
+# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# app.config["SECRET_KEY"] = "af2fad8cfe1f4c5fac4aa5edf6fcc8f3"
+# app.config["UP_DIR"]=os.path.join(os.path.abspath(os.path.dirname(__file__)),"static/uploads/")
+# app.debug = True

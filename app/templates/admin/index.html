@@ -13,7 +13,8 @@
         }
 
         .info-content {
-        {#height: 600px;#} padding: 15px;
+        {#height: 600px;#}
+        {#    padding: 15px;#}
             border-left: 1px solid #dddddd;
             border-bottom: 1px solid #dddddd;
             border-right: 1px solid #dddddd;
@@ -105,10 +106,7 @@
         var update_mychart = function (res) { //res是json格式的response对象
 
             // 隐藏加载动画
-            mytest.hideLoading();
-            mytest.resize({
-                width: 'auto'
-            });
+            {#mytest.hideLoading();#}
 
             // 准备数据
             time.push(res.data[0]);

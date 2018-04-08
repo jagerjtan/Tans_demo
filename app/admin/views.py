@@ -1,43 +1,14 @@
 # coding: utf8
 from functools import wraps
 from . import admin
-from app import db, app, socketio
+from app import db, app
 from flask import render_template, url_for, redirect, flash, request, session
 from app.admin.forms import LoginForm, PwdForm, RegisterForm
 from app.models import Admin, Adminlog, Member
+from app.decorators import admin_login_req
+from app.socketios import socketio
+from app.charts import test_graph
 import shutil
-
-
-# my graph
-def test_graph():
-    from pyecharts import Line, Style
-
-    style = Style(
-        width='100%'
-    )
-
-    attr,v1,v2,v3,v4 = [],[],[],[],[]
-    line = Line("cpu们", **style.init_style)
-    line.chart_id = 'cpus'
-    line.add("cpu1", attr, v1, is_smooth="True", is_toolbox_show=False)
-    line.add("cpu2", attr, v2, is_smooth="True")
-    line.add("cpu3", attr, v3, is_smooth="True")
-    line.add("cpu4", attr, v4, is_smooth="True")
-    return line.render_embed()
-
-
-# 访问限制装饰器
-def admin_login_req(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if "admin" in session and "admin_id" in session:
-            flash("online", "stat1")
-            return f(*args, **kwargs)
-        else:
-            flash("offline", "stat2")
-            return redirect(url_for("admin.login", next=request.url))
-
-    return decorated_function
 
 
 @admin.route("/", methods=['GET'])
@@ -121,6 +92,10 @@ def account(id=None):
         db.session.commit()
         flash("修改密码成功，请重新登录！", "ok")
         return redirect(url_for("admin.logout"))
+    #
+    # 预留form2给其他修改表单，例如编辑信息，增删查改记录
+    #
+
     return render_template("admin/account.html", id=id, form1=form1, data=data)
 
 
