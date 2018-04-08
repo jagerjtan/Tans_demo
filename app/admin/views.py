@@ -1,12 +1,29 @@
 # coding: utf8
 from functools import wraps
 from . import admin
-from app import db, app
+from app import db, app, socketio
 from flask import render_template, url_for, redirect, flash, request, session
 from app.admin.forms import LoginForm, PwdForm, RegisterForm
 from app.models import Admin, Adminlog, Member
 import shutil
-from flask_sqlalchemy import SQLAlchemy
+
+
+# my graph
+def test_graph():
+    from pyecharts import Line, Style
+
+    style = Style(
+        width='100%'
+    )
+
+    attr,v1,v2,v3,v4 = [],[],[],[],[]
+    line = Line("cpu们", **style.init_style)
+    line.chart_id = 'cpus'
+    line.add("cpu1", attr, v1, is_smooth="True", is_toolbox_show=False)
+    line.add("cpu2", attr, v2, is_smooth="True")
+    line.add("cpu3", attr, v3, is_smooth="True")
+    line.add("cpu4", attr, v4, is_smooth="True")
+    return line.render_embed()
 
 
 # 访问限制装饰器
@@ -26,7 +43,7 @@ def admin_login_req(f):
 @admin.route("/", methods=['GET'])
 @admin_login_req
 def index():
-    return render_template("admin/index.html")
+    return render_template("admin/index.html", async_mode=socketio.async_mode, myechart=test_graph())
 
 
 @admin.route("/login/", methods=['GET', 'POST'])
@@ -62,10 +79,10 @@ def logout():
     if '_flashes' in session:
         msg = session['_flashes']
         session.clear()
-        session['_flashes']=msg
+        session['_flashes'] = msg
     else:
         session.clear()
-    flash("You've logged out.","ok")
+    flash("You've logged out.", "ok")
     return redirect(url_for('admin.login'))
 
 
@@ -75,22 +92,27 @@ def test():
     return render_template("admin/test.html")
 
 
+@admin.route("/jstest/", methods=['GET'])
+def jstest():
+    return render_template("admin/jstest.html")
+
+
 @admin.route("/account/<int:id>", methods=['GET', 'POST'])
 @admin_login_req
 def account(id=None):
-    data={}
+    data = {}
     if id == None:
         id = int(session['admin_id'])
     try:
         admin = Admin.query.filter_by(account=session['admin']).first()
-        last_adminlogin= admin.adminlogs[-1]
+        last_adminlogin = admin.adminlogs[-1]
         data = {
             'name': admin.account,
             'last_login': last_adminlogin.addtime,
-            'ip':last_adminlogin.ip
+            'ip': last_adminlogin.ip
         }
     except BaseException as e:
-        flash(e,"err")
+        flash(e, "err")
     form1 = PwdForm()
     if form1.validate_on_submit():
         from werkzeug.security import generate_password_hash
@@ -99,7 +121,7 @@ def account(id=None):
         db.session.commit()
         flash("修改密码成功，请重新登录！", "ok")
         return redirect(url_for("admin.logout"))
-    return render_template("admin/account.html", id=id,form1=form1, data=data)
+    return render_template("admin/account.html", id=id, form1=form1, data=data)
 
 
 @admin.route("/register", methods=['GET', 'POST'])

@@ -4,14 +4,16 @@
 {% block title %}Core{% endblock %}
 
 {% block css %}
+    {#    <script src="http://oog4yfyu0.bkt.clouddn.com/echarts.min.js"></script>#}
+    <script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>
+    <script src="{{ url_for('static',filename='js/echarts.min.js') }}"></script>
     <style>
         .info-div {
             padding: 0px;
         }
 
         .info-content {
-            height: 300px;
-            padding: 15px;
+        {#height: 600px;#} padding: 15px;
             border-left: 1px solid #dddddd;
             border-bottom: 1px solid #dddddd;
             border-right: 1px solid #dddddd;
@@ -32,25 +34,16 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-lg-10 col-md-8 info-div">
                 <ul id="mytab" class="nav nav-tabs">
-                    <li class="active"><a href="#content1" data-toggle="tab">Overview</a></li>
+                    <li class="active"><a href="#content1" data-toggle="tab">Server Status</a></li>
                     <li><a href="#content2" data-toggle="tab">活动日历</a></li>
                     <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content info-content">
                     <div class="tab-pane fade in active" id="content1">
-                        <div style="text-align: right;width:50%;float: left;">
-                            <h4><a href="#">服务器状态</a></h4>
-                            <h4><a href="#">查看Tan信息</a></h4>
-                            <h4><a href="#">查看成员信息</a></h4>
-                        </div>
-                        <div style="text-align: left; padding-left: 20px;width: 50%; float: left;">
-                            <h4><a href="#" style="color: red;">X</a></h4>
-                            <h4><a href="#" style="color: red;">X</a></h4>
-                            <h4><a href="#" style="color: red;">X</a></h4>
-                        </div>
+                            <div id="mytest" style="height:500px;">{{ myechart|safe }}</div>
                     </div>
                     <div class="tab-pane" id="content2">
-                        <h2 id="section-1">第一部分</h2>
+                        <h2 id="section-100">第一部分</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at,
                             luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum id
                             metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet
@@ -65,6 +58,30 @@
                     </div>
                     <div class="tab-pane" id="content3">
                         <p>Insert verbose log</p>
+                        <div class="row">
+                            <div style="text-align: right;width:50%;float: left;">
+                                <h4><a href="#">服务器状态</a></h4>
+                                <h4><a href="#">查看Tan信息</a></h4>
+                                <h4><a href="#">查看成员信息</a></h4>
+                            </div>
+                            <div style="text-align: left; padding-left: 20px;width: 50%; float: left;">
+                                <h4><a href="#" style="color: red;">X</a></h4>
+                                <h4><a href="#" style="color: red;">X</a></h4>
+                                <h4><a href="#" style="color: red;">X</a></h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="text-align: right;width:50%;float: left;">
+                                <h4><a href="#">CPU</a></h4>
+                                <h4><a href="#">内存</a></h4>
+                                <h4><a href="#">内存占用</a></h4>
+                            </div>
+                            <div style="text-align: left; padding-left: 20px;width: 50%; float: left;">
+                                <h4><a href="#" style="color: red;"></a></h4>
+                                <h4><a href="#" style="color: red;"></a></h4>
+                                <h4><a href="#" style="color: red;"></a></h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,6 +91,72 @@
 
 
 {% block script %}
+    <script type="text/javascript">
+        cpus = document.getElementById('cpus');
+        var mytest = echarts.getInstanceByDom(cpus);
+
+        var time = ["", "", "", "", "", "", "", ""],
+            cpu1 = [0, 0, 0, 0, 0, 0, 0, 0],
+            cpu2 = [0, 0, 0, 0, 0, 0, 0, 0],
+            cpu3 = [0, 0, 0, 0, 0, 0, 0, 0],
+            cpu4 = [0, 0, 0, 0, 0, 0, 0, 0]
+
+        //准备好统一的 callback 函数
+        var update_mychart = function (res) { //res是json格式的response对象
+
+            // 隐藏加载动画
+            mytest.hideLoading();
+            mytest.resize({
+                width: 'auto'
+            });
+
+            // 准备数据
+            time.push(res.data[0]);
+            cpu1.push(parseFloat(res.data[1]));
+            cpu2.push(parseFloat(res.data[2]));
+            cpu3.push(parseFloat(res.data[3]));
+            cpu4.push(parseFloat(res.data[4]));
+            if (time.length >= 8) {
+                time.shift();
+                cpu1.shift();
+                cpu2.shift();
+                cpu3.shift();
+                cpu4.shift();
+            }
+
+            // 填入数据
+            mytest.setOption({
+                xAxis: {
+                    data: time
+                },
+                series: [{
+                    name: 'cpu1', // 根据名字对应到相应的系列
+                    data: cpu1
+                }, {
+                    name: 'cpu2',
+                    data: cpu2
+                }, {
+                    name: 'cpu3',
+                    data: cpu3
+                }, {
+                    name: 'cpu4',
+                    data: cpu4
+                }]
+            });
+
+        };
+
+        // 建立socket连接，等待服务器“推送”数据，用回调函数更新图表
+        $(document).ready(function () {
+            namespace = '/test';
+            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+
+            socket.on('server_response', function (res) {
+                update_mychart(res);
+            });
+
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $("#section-1").addClass("active");
