@@ -2,7 +2,7 @@
 from pyecharts import Bar
 
 
-# test graph
+# 四核CPU折线图
 def test_graph():
     from pyecharts import Line, Style
 
@@ -35,15 +35,3 @@ def server_status():
             bar_category_gap="5%", label_color=label_color)
     return bar.render_embed()
 
-
-# bar test
-def bar_test():
-    from pyecharts import Bar
-
-    attr = ["CPU", "Memory", "Network"]
-    v1 = [10, 0, 0]
-    v2 = [0, 1, 0]
-    bar = Bar("Status in Bar View")
-    bar.add("core1", attr, v1, is_stack=True)
-    bar.add("core2", attr, v2, is_stack=True)
-    return bar.render_embed()

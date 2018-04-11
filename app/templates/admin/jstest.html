@@ -6,6 +6,7 @@
     <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
     <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -13,70 +14,87 @@
         <div class="col-lg-6 col-lg-offset-3">
             <div style="text-align: center;"><h1>JS Test Area</h1></div>
             <div style="height: 200px; padding-left: 50px;">
+                <a href="{{ url_for('admin.index') }}">home</a>
                 <div id="d-1">
                     <p id="p1">p1: Hello World!</p>
                     <p id="p2">p2: Hello World!Hello World!</p>
                     <p id="p3">p3: Hello World!Hello World!Hello World!</p>
-                    <code>
-                        <pre>
-output = document.getElementById('output');
-father = document.getElementById('d-1');
-son = document.getElementById('p1');
-
-test1 = son.isSameNode(father.firstChild);
-test2 = son.parentNode.isSameNode(son.parentElement)
-output.innerHTML = "<b>test1 result:</b>  " + test1 + "<br>" + "<b>test2 result:</b>  " + test2
-                        </pre>
-                    </code>
                     <hr>
                     Output:<p id="output"></p>
                 </div>
+                <div>
+                    <hr>
+                    <h2>Chat with server</h2>
+                    <hr>
+                    <div id="chat"></div>
+                    <script type="text/javascript">
+                        var update_div = function (res) {
+
+                            $("#chat").append("Server :  "+res.data + " | "+ Date() + "<br>")
+
+                        };
+
+                        $(document).ready(function () {
+                            namespace = '/test';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+
+                            msg = {'data': "I got it."};
+                            socket.on('server_sent', function (res) {
+                                update_div(res);
+                                socket.emit('client_sent', msg);
+                            });
+                        });
+                    </script>
+                </div>
+
 
             </div>
         </div>
     </div>
 </div>
+
+
 </body>
-<script>
-    output = document.getElementById('output');
-    father = document.getElementById('d-1');
-    son = document.getElementById('p1');
-
-
-    test1 = son.isSameNode(father.firstChild);
-    test2 = son.isEqualNode(father.firstChild);
-    test3 = son.isSameNode(father.firstElementChild);
-    test4 = son.isEqualNode(father.firstElementChild);
-
-    test5 = son.parentNode.isSameNode(son.parentElement);
-    test6 = son.parentNode.isEqualNode(son.parentElement);
-
-    son_test1 = son.nodeName;
-    son_test2 = father.firstChild;
-    son_test3 = father.firstElementChild;
-    son_test4 = son.id;
-    son_test5 = father.firstElementChild.id;
-    son_test6 = $('#d-1').find("p")[0].id;
-    son_test7 = son.isEqualNode($('#d-1').find("p")[0]);
-    son_test8 = son.isSameNode($('#d-1').find("p")[0]);
-    son_test9 = father.getElementsByTagName("p")[0].id;
-
-    output.innerHTML =
-        "<b>test1 result:</b>  " + test1 + "<br>" +
-        "<b>test2 result:</b>  " + test2 + "<br>" +
-        "<b>test3 result:</b>  " + test3 + "<br>" +
-        "<b>test4 result:</b>  " + test4 + "<br>" +
-        "<b>test5 result:</b>  " + test5 + "<br>" +
-        "<b>test6 result:</b>  " + test6 + "<br>" +
-        "<b>son_test1 result:</b>  " + son_test1 + "<br>" +
-        "<b>son_test2 result:</b>  " + son_test2 + "<br>" +
-        "<b>son_test3 result:</b>  " + son_test3 + "<br>" +
-        "<b>son_test4 result:</b>  " + son_test4 + "<br>" +
-        "<b>son_test5 result:</b>  " + son_test5 + "<br>" +
-        "<b>son_test6 result:</b>  " + son_test6 + "<br>" +
-        "<b>son_test7 result:</b>  " + son_test7 + "<br>" +
-        "<b>son_test8 result:</b>  " + son_test8 + "<br>" +
-        "<b>son_test9 result:</b>  " + son_test9 + "<br>";
-</script>
+{#<script>#}
+{#    output = document.getElementById('output');#}
+{#    father = document.getElementById('d-1');#}
+{#    son = document.getElementById('p1');#}
+{##}
+{##}
+{#    test1 = son.isSameNode(father.firstChild);#}
+{#    test2 = son.isEqualNode(father.firstChild);#}
+{#    test3 = son.isSameNode(father.firstElementChild);#}
+{#    test4 = son.isEqualNode(father.firstElementChild);#}
+{##}
+{#    test5 = son.parentNode.isSameNode(son.parentElement);#}
+{#    test6 = son.parentNode.isEqualNode(son.parentElement);#}
+{##}
+{#    son_test1 = son.nodeName;#}
+{#    son_test2 = father.firstChild;#}
+{#    son_test3 = father.firstElementChild;#}
+{#    son_test4 = son.id;#}
+{#    son_test5 = father.firstElementChild.id;#}
+{#    son_test6 = $('#d-1').find("p")[0].id;#}
+{#    son_test7 = son.isEqualNode($('#d-1').find("p")[0]);#}
+{#    son_test8 = son.isSameNode($('#d-1').find("p")[0]);#}
+{#    son_test9 = father.getElementsByTagName("p")[0].id;#}
+{##}
+{#    output.innerHTML =#}
+{#        "<b>test1 result:</b>  " + test1 + "<br>" +#}
+{#        "<b>test2 result:</b>  " + test2 + "<br>" +#}
+{#        "<b>test3 result:</b>  " + test3 + "<br>" +#}
+{#        "<b>test4 result:</b>  " + test4 + "<br>" +#}
+{#        "<b>test5 result:</b>  " + test5 + "<br>" +#}
+{#        "<b>test6 result:</b>  " + test6 + "<br>" +#}
+{#        "<b>son_test1 result:</b>  " + son_test1 + "<br>" +#}
+{#        "<b>son_test2 result:</b>  " + son_test2 + "<br>" +#}
+{#        "<b>son_test3 result:</b>  " + son_test3 + "<br>" +#}
+{#        "<b>son_test4 result:</b>  " + son_test4 + "<br>" +#}
+{#        "<b>son_test5 result:</b>  " + son_test5 + "<br>" +#}
+{#        "<b>son_test6 result:</b>  " + son_test6 + "<br>" +#}
+{#        "<b>son_test7 result:</b>  " + son_test7 + "<br>" +#}
+{#        "<b>son_test8 result:</b>  " + son_test8 + "<br>" +#}
+{#        "<b>son_test9 result:</b>  " + son_test9 + "<br>";#}
+{#</script>#}
 
 </html>
