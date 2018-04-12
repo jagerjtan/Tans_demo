@@ -5,7 +5,8 @@
 
 {% block css %}
     {#    <script src="http://oog4yfyu0.bkt.clouddn.com/echarts.min.js"></script>#}
-    <script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>
+{#    <script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>#}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/socket.io.js') }}"></script>
     <script src="{{ url_for('static',filename='js/echarts.min.js') }}"></script>
     <style>
         .info-div {
@@ -40,8 +41,20 @@
                 </ul>
                 <div id="myTabContent" class="tab-content info-content">
                     <div class="tab-pane fade in active" id="content1">
-                        <div id="mytest1" style="height:500px;">
+                        <div style="height:500px;">
                             {{ myechart|safe }}
+                        </div>
+                        <div>
+                            <button type="button" onclick="chartstart()" class="btn btn-default" id="btn-1">Start
+                            </button>
+                            <button type="button" onclick="chartstop(socket_glob)" class="btn btn-default" , id="btn-2">
+                                Stop
+                            </button>
+                            <hr>
+                            <form id="emit" action="#">
+                                <b>Update Frequency(s):</b><input id="emit_data" type="number" max="10" min="1" maxlength="2" >
+                                <input type="submit" class="btn btn-default" value="Change">
+                            </form>
                         </div>
                     </div>
                     <div class="tab-pane" id="content2">
@@ -59,30 +72,12 @@
                         <hr>
                     </div>
                     <div class="tab-pane" id="content3">
-                        <p>Insert verbose log</p>
-                        <div class="row">
-                            <div style="text-align: right;width:50%;float: left;">
-                                <h4><a href="#">服务器状态</a></h4>
-                                <h4><a href="#">查看Tan信息</a></h4>
-                                <h4><a href="#">查看成员信息</a></h4>
-                            </div>
-                            <div style="text-align: left; padding-left: 20px;width: 50%; float: left;">
-                                <h4><a href="#" style="color: red;">X</a></h4>
-                                <h4><a href="#" style="color: red;">X</a></h4>
-                                <h4><a href="#" style="color: red;">X</a></h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div style="text-align: right;width:50%;float: left;">
-                                <h4><a href="#">CPU</a></h4>
-                                <h4><a href="#">内存</a></h4>
-                                <h4><a href="#">内存占用</a></h4>
-                            </div>
-                            <div style="text-align: left; padding-left: 20px;width: 50%; float: left;">
-                                <h4><a href="#" style="color: red;"></a></h4>
-                                <h4><a href="#" style="color: red;"></a></h4>
-                                <h4><a href="#" style="color: red;"></a></h4>
-                            </div>
+                        <div style="width: 100%; padding-left: 10px;">
+                            <button class="btn btn-default" onclick="logon=true;">Start Log</button>
+                            <button class="btn btn-default" onclick="logon=false;">Stop Log</button>
+                            <button class="btn btn-default" onclick="clearlog()">clear</button>
+                            <hr>
+                            <div id="verbose-log"></div>
                         </div>
                     </div>
                 </div>
@@ -96,8 +91,7 @@
     <script type="text/javascript">
         OW = document.getElementById('serverow');
         var statchart = echarts.getInstanceByDom(OW);
-
-        var v1 = [0, 0, 0]
+        var logon = false;
 
         //准备好统一的 callback 函数
         var update_mychart = function (res) { //res是json格式的response对象
@@ -106,9 +100,14 @@
             {#mytest.hideLoading();#}
 
             // 准备数据
-            v1[0] = parseFloat(res.data[0]);
-            v1[1] = parseFloat(res.data[1]);
-            v1[2] = parseFloat(res.data[2]);
+            var log = res.data;
+            var v1 = [res.data[0], res.data[1], res.data[2]];
+
+            if (logon) {
+                $("#verbose-log").append("<b>" + log[3] + " | " + log[4] + " : </b>" + "CPU - " + log[0] + "%; " + "Mem - " + log[1] + "%; " + "Net - " + log[2] + "% <br>");
+            }
+            ;
+
 
             // 填入数据
             statchart.setOption({
@@ -120,15 +119,42 @@
 
         };
 
-        // 建立socket连接，等待服务器“推送”数据，用回调函数更新图表
-        $(document).ready(function () {
+
+        var socket_glob;
+
+        function chartstart() {
             namespace = '/serverow';
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-
+            socket_glob = socket;
             socket.on('server_response', function (res) {
                 update_mychart(res);
             });
+            $("#verbose-log").html("");
+            $("#btn-1").addClass("disabled");
+            $("#btn-2").removeClass("disabled");
+        };
 
+        function chartstop(socket) {
+            socket.disconnect();
+            res = {'data': [0, 0, 0, 0, 0]};
+            update_mychart(res);
+            $("#btn-2").addClass("disabled");
+            $("#btn-1").removeClass("disabled");
+        };
+
+        function clearlog() {
+            $("#verbose-log").html("")
+        };
+
+        $('form#emit').submit(function(event) {
+                socket = socket_glob;
+                socket.emit('freq', {data: $('#emit_data').val()});
+                return false;
+            });
+
+        // 建立socket连接，等待服务器“推送”数据，用回调函数更新图表
+        $(document).ready(function () {
+            chartstart();
         });
 
     </script>
