@@ -38,7 +38,7 @@ def login():
         db.session.add(adminlog)
         db.session.commit()
         flash("登录成功！", "ok")
-        flash("online", "stat")
+        flash("online", "stat1")
         return redirect(request.args.get("next") or url_for("admin.index"))
     return render_template("admin/login.html", form=form)
 
@@ -72,7 +72,7 @@ def jstest():
 @admin_login_req
 def account(id=None):
     data = {}
-    if id == None:
+    if id == 202:
         id = int(session['admin_id'])
     try:
         admin = Admin.query.filter_by(account=session['admin']).first()

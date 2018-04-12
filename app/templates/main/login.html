@@ -1,73 +1,46 @@
-{% extends 'ui/base.html' %}
+{% extends 'ui/mainbase.html' %}
 {% block title %}成员登录{% endblock %}
 
 {% block css %}{% endblock %}
+{% block sidebar %}{% endblock %}
+
 {% block main %}
-    <div class="container">
-        {#      登录表单#}
-        <div class="row">
-            <div class="col-md-4 col-xs-10 col-md-offset-4 col-xs-offset-1">
-                {% for msg in get_flashed_messages(category_filter=["ok"]) %}
-                    {% if msg != 'online' %}
-                        <div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                            <h4><i class="icon fa fa-check"></i>操作成功！</h4>
-                            {{ msg }}
+    {#      登录表单#}
+    <div class="row">
+        <div class="col-xs-10 col-sm-10 col-md-6 col-lg-4 col-lg-offset-4 col-md-offset-3 col-xs-offset-1 col-sm-offset-1">
+            <!--表单内核-->
+            <form class="form-signin" method="post">
+                <h2 class="form-signin-heading">登录</h2>
+                <div class="form-group has-feedback">
+                    {{ form.account }}
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    {% for err in form.account.errors %}
+                        <div class="col-md-12">
+                            <p style="color: red">{{ err }}</p>
                         </div>
-                    {% endif %}
-                {% endfor %}
-                {% for msg in get_flashed_messages(category_filter=["err"]) %}
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4><i class="icon fa fa-ban"></i> 操作失败！</h4>
-                        {{ msg }}
-                    </div>
-                {% endfor %}
-                <form class="form-signin" method="post">
-                    <h2 class="form-signin-heading">成员登录</h2>
-                    {#                    <label for="inputEmail" class="sr-only">Email address</label>#}
-                    {#                    <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus=""#}
-                    {#                           type="email">#}
-                    {#                    <label for="inputPassword" class="sr-only">Password</label>#}
-                    {#                    <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password">#}
-                    {#                    <div class="checkbox">#}
-                    {#                        <label>#}
-                    {#                            <input value="remember-me" type="checkbox"> Remember me#}
-                    {#                        </label>#}
-                    {#                    </div>#}
-                    {#                    <button class="btn btn-lg btn-primary btn-flat" type="submit">Sign in</button>#}
-
-
-                    <div class="form-group has-feedback">
-                        {{ form.account }}
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                        {% for err in form.account.errors %}
-                            <div class="col-md-12">
-                                <p style="color: red">{{ err }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="form-group has-feedback">
-                        {{ form.pwd }}
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                        {% for err in form.pwd.errors %}
-                            <div class="col-md-12">
-                                <p style="color: red">{{ err }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-8">
+                    {% endfor %}
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.pwd }}
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    {% for err in form.pwd.errors %}
+                        <div class="col-md-12">
+                            <p style="color: red">{{ err }}</p>
                         </div>
-                        <div class="col-xs-4">
-                            {{ form.submit }}
-                            {{ form.csrf_token }}
-                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
                     </div>
-                </form>
-            </div>
+                    <div class="col-xs-4">
+                        {{ form.submit }}
+                        {{ form.csrf_token }}
+                    </div>
+                </div>
+            </form>
+            <!-- 表单内核-->
         </div>
-        {#      登录表单#}
-    </div> <!-- /container -->
+    </div>
+    {#      登录表单#}
 {% endblock %}
 {% block script %}{% endblock %}

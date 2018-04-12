@@ -25,7 +25,8 @@
 
 
 {% block main %}
-    <section>
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0px;">
+        <section>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding: 0px 5px;">
                 <div class="col-xs-12 col-lg-9"
@@ -36,11 +37,11 @@
                 {% for v in page_data.items %}
                     <div class="col-xs-12 col-lg-9"
                          style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 10px;padding:5px;">
-                        <div style="width: 30%; border-right: 1px solid black;float:left;">
+                        <div style="width: 30%;float:left;">
                             <img class="membericon" src="{{ url_for('static',filename='uploads/members/'+v.face) }}"
                                  alt="">
                         </div>
-                        <div style="width: 50%; border-right: 1px solid black;float: left">
+                        <div style="width: 50%;float: left">
                             <p>Nickname: {{ v.nickname }}</p>
                             <p>Mobile: {{ v.mobile }}</p>
                         </div>
@@ -55,6 +56,7 @@
             </div>
         </div>
     </section>
+    </div>
 {% endblock %}
 
 

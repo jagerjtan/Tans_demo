@@ -1,28 +1,210 @@
-{% extends "ui/base.html" %}
-{% block title %}{% endblock %}
+{% extends "ui/mainbase.html" %}
+{% block title %} 个人信息 {% endblock %}
 {% block css %}
+    <style>
+        .myaccount-row {
+            background: #ffffff;
+        {#height: 200px;#}
+        }
+
+        .mylogoinfo {
+            box-shadow: 0 3px 5px 3px #ebf2ff;
+            height: 100%;
+            margin-bottom: 9px;
+            padding: 0px;
+        }
+
+        #mylogo {
+            margin: auto;
+            position: relative;
+            display: block;
+            padding: 10px;
+            height: 100%;
+        }
+
+        #logo-btn {
+            width: 55px;
+            margin: auto;
+            position: relative;
+            display: block;
+            height: 100%;
+        }
+
+        #setting-pop {
+            width: 100px;
+        }
+
+        .info-div {
+            padding: 0px;
+        }
+
+        .info-content {
+            height: 300px;
+            padding: 15px;
+            border-left: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+            border-right: 1px solid #dddddd;
+        }
+    </style>
 {% endblock %}
+
+{% block sidebar %}{% include "ui/mainsidebar.html" %}{% endblock %}
 {% block main %}
-    <div class="container">
-        <div class="row" style="border: 1px solid black; height: 200px;padding: 1% 0% 1% 0%;">
-            <div class="col-md-3 col-md-offset-2 col-xs-4" style="border: 1px solid blue;height: 100%;">
-                <p>头像</p>
-                <p>修改头像</p>
-            </div>
-            <div class="col-md-5 col-xs-8" style="border: 1px solid blue;height: 100%;">
-                <p>名字</p>
-                <p>简介</p>
-                <p>修改密码</p>
-            </div>
-        </div>
-        <div class="row" style="border: 1px solid black; height: 200px;padding: 1% 0% 1% 0%;">
-            <div class="col-md-8 col-md-offset-2 col-xs-12" style="border: 1px solid blue;height: 100%;">
-                <p>饼状图</p>
-                <p>主要信息</p>
-            </div>
-        </div>
+    <!--捕捉修改密码表单的错误信息，显示模态框-->
+    {% if form1.re_pwd.errors or form1.new_pwd.errors or form1.old_pwd.errors %}
+        <script>
+            $(function () {
+                $('#my1stModal').modal(
+                    'show'
+                )
+            });
+        </script>
+    {% endif %}
+    <!--错误消息捕捉-->
+
+    <!--Main-->
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0px;">
+        <section>
+            <!-- 1s Row -->
+            <div class="row myaccount-row">
+                <!--1s Col-->
+                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12 mylogoinfo">
+                    <!--头像-->
+                    <div style="width:100%;height:200px;">
+                        <img id="mylogo"
+                             src="{{ url_for('static',filename='uploads/members/default.jpg') }}" alt="">
+                    </div><!--头像-->
+                </div><!--1st col-->
+                <!-- 2nd Col -->
+                <div class="col-md-8 col-lg-6 col-xs-12 col-sm-12 mylogoinfo" style="float: left; height: 100%;">
+                    <div class="col-xs-12 col-lg-10 col-md-8" style="padding: 15px;">
+                        <div style="float:left;text-align: right;width: 30%;">
+                            <p><strong>成员:</strong></p>
+                            <p><strong>最近登录:</strong></p>
+                            <p><strong>登录位置:</strong></p>
+                        </div>
+                        <div style="float: left;text-align: left;70%; padding-left: 15px;">
+                            <p>{{ data.name }}</p>
+                            <p>{{ data.last_login }}</p>
+                            <p>{{ data.ip }}</p>
+                        </div>
+                    </div>
+
+                    <div class="hidden-xs hidden-sm col-lg-2 col-md-2" style="height: 200px; padding: 10px;">
+                        <div id="logo-btn">
+                            <a tabindex="0" class="btn btn-default" role="button"
+                               data-toggle="popover"
+                               data-placement="bottom" data-trigger="focus" data-html="True"
+                               data-content='<div id="setting-pop"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a></div>'>设置</a>
+                        </div>
+                    </div>
+
+                    <!--折叠栏-->
+                    <div class="col-xs-12" style="height: 100%; padding:0px;">
+                        <div class="panel-group hidden-md hidden-lg" role="tablist" style="margin-bottom: 0px;">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="collapseListGroupHeading1"
+                                     style="text-align: center">
+                                    <h4 class="panel-title">
+                                        <a class="" role="button" data-toggle="collapse" href="#collapseListGroup1"
+                                           aria-expanded="true"
+                                           aria-controls="collapseListGroup1">
+                                            编辑信息
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="collapseListGroupHeading1" aria-expanded="true" style="">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="#">编辑个人信息</a></li>
+                                        <li class="list-group-item"><a href="#" data-toggle="modal"
+                                                                       data-target="#my1stModal">修改密码</a>
+                                        </li>
+                                        <li class="list-group-item"><a href="#">等待修改</a></li>
+                                    </ul>
+                                    <div class="panel-footer">
+                                        <span class="glyphicon glyphicon-menu-up"></span>
+                                        <a href="#collapseListGroup1" data-toggle="collapse" style="color: black">收起</a>
+                                    </div>
+                                </div><!--折叠栏列表-->
+                            </div>
+                        </div><!--折叠栏--></div>
+                </div><!--2nd Col-->
+            </div><!--1st ROW-->
+            <!-- 2nd Row -->
+            <div class="row">
+                <div class="col-md-12 col-lg-10 col-xs-12 info-div">
+                    <ul id="mytab" class="nav nav-tabs">
+                        <li class="active"><a href="#content1" data-toggle="tab">Timeline</a></li>
+                        <li><a href="#content2" data-toggle="tab">活动日历</a></li>
+                        <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content info-content">
+                        <div class="tab-pane fade in active" id="content1">Insert Timeline</div>
+                        <div class="tab-pane" id="content2"><p>Insert Calender</p></div>
+                        <div class="tab-pane" id="content2"><p>Insert verbose log</p></div>
+                    </div>
+                </div>
+            </div><!--2nd ROW-->
+        </section>
     </div>
+
+    <!-- my1stModal -->
+    <form class="form-group" role="form" method="POST">
+        <div class="modal fade" id="my1stModal" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="my1stModalLabel" style="margin-top: 60px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button data-dismiss="modal" class="close" type="button"><span
+                                aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">修改密码</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group has-feedback">
+                            <label for="input_oldpwd">{{ form1.old_pwd.label }}</label>
+                            {{ form1.old_pwd }}
+                            {% for err in form1.old_pwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_newpwd">{{ form1.new_pwd.label }}</label>
+                            {{ form1.new_pwd }}
+                            {% for err in form1.new_pwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_repwd">{{ form1.re_pwd.label }}</label>
+                            {{ form1.re_pwd }}
+                            {% for err in form1.re_pwd.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        {{ form1.csrf_token }}
+                        {{ form1.submit }}
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!--my1stModal-->
+    </form>
 {% endblock %}
 {% block script %}
-
+    <script>
+        $(document).ready(function () {
+            $("#n-2").addClass("active");
+            $("#bn-3").addClass("active");
+        });
+    </script>
 {% endblock %}
