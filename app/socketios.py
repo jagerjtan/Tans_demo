@@ -7,7 +7,7 @@ import psutil, time
 # 监控线程
 thread = None
 thread_lock = Lock()
-freq = 5
+freq = 3
 
 async_mode = None
 socketio = SocketIO(app, async_mode=async_mode)

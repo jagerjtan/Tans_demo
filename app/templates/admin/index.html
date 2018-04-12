@@ -5,7 +5,7 @@
 
 {% block css %}
     {#    <script src="http://oog4yfyu0.bkt.clouddn.com/echarts.min.js"></script>#}
-{#    <script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>#}
+    {#    <script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>#}
     <script type="text/javascript" src="{{ url_for('static',filename='js/socket.io.js') }}"></script>
     <script src="{{ url_for('static',filename='js/echarts.min.js') }}"></script>
     <style>
@@ -47,12 +47,13 @@
                         <div>
                             <button type="button" onclick="chartstart()" class="btn btn-default" id="btn-1">Start
                             </button>
-                            <button type="button" onclick="chartstop(socket_glob)" class="btn btn-default" , id="btn-2">
+                            <button type="button" onclick="chartstop(socket_glob)" class="btn btn-default" id="btn-2">
                                 Stop
                             </button>
                             <hr>
                             <form id="emit" action="#">
-                                <b>Update Frequency(s):</b><input id="emit_data" type="number" max="10" min="1" maxlength="2" >
+                                <b>Update Frequency(s):</b><input id="emit_data" type="number" max="10" min="1"
+                                                                  maxlength="2">
                                 <input type="submit" class="btn btn-default" value="Change">
                             </form>
                         </div>
@@ -75,7 +76,7 @@
                         <div style="width: 100%; padding-left: 10px;">
                             <button class="btn btn-default" onclick="logon=true;">Start Log</button>
                             <button class="btn btn-default" onclick="logon=false;">Stop Log</button>
-                            <button class="btn btn-default" onclick="clearlog()">clear</button>
+                            <button class="btn btn-default" onclick="clearlog()">Clear</button>
                             <hr>
                             <div id="verbose-log"></div>
                         </div>
@@ -131,7 +132,9 @@
             });
             $("#verbose-log").html("");
             $("#btn-1").addClass("disabled");
+            document.getElementById("btn-1").setAttribute("disabled", "disabled");
             $("#btn-2").removeClass("disabled");
+            document.getElementById("btn-2").removeAttribute("disabled");
         };
 
         function chartstop(socket) {
@@ -139,18 +142,20 @@
             res = {'data': [0, 0, 0, 0, 0]};
             update_mychart(res);
             $("#btn-2").addClass("disabled");
+            document.getElementById("btn-2").setAttribute("disabled", "disabled");
             $("#btn-1").removeClass("disabled");
+            document.getElementById("btn-1").removeAttribute("disabled");
         };
 
         function clearlog() {
             $("#verbose-log").html("")
         };
 
-        $('form#emit').submit(function(event) {
-                socket = socket_glob;
-                socket.emit('freq', {data: $('#emit_data').val()});
-                return false;
-            });
+        $('form#emit').submit(function (event) {
+            socket = socket_glob;
+            socket.emit('freq', {data: $('#emit_data').val()});
+            return false;
+        });
 
         // 建立socket连接，等待服务器“推送”数据，用回调函数更新图表
         $(document).ready(function () {
