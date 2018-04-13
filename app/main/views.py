@@ -72,7 +72,8 @@ def account(id=None):
         data = {
             'name': member.account,
             'last_login': last_memberlogin.addtime,
-            'ip': last_memberlogin.ip
+            'ip': last_memberlogin.ip,
+            'face': member.face
         }
     except BaseException as e:
         flash(e, "err")

@@ -41,11 +41,14 @@ def stat_connect():
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(background_thread)
+            print(thread)
+
 
 @socketio.on('disconnect', namespace='/serverow')
 def stat_end():
     disconnect(namespace='/serverow')
     print('client-side disconnect')
+
 
 @socketio.on('freq', namespace='/serverow')
 def change_freq(myfreq):
@@ -63,5 +66,5 @@ def chat_connect():
 def chat_loop(msg):
     if msg:
         socketio.sleep(5)
-        socketio.emit('server_sent', {'data': 'here'}, namespace = '/test')
+        socketio.emit('server_sent', {'data': 'here'}, namespace='/test')
         print(msg['data'])

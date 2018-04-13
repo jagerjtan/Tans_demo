@@ -33,59 +33,63 @@
 {% block main %}
     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0px;">
         <section>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-lg-10 col-md-8 info-div">
-                <ul id="mytab" class="nav nav-tabs">
-                    <li class="active"><a href="#content1" data-toggle="tab">Server Status</a></li>
-                    <li><a href="#content2" data-toggle="tab">活动日历</a></li>
-                    <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
-                </ul>
-                <div id="myTabContent" class="tab-content info-content">
-                    <div class="tab-pane fade in active" id="content1">
-                        <div style="height:500px;">
-                            {{ myechart|safe }}
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-10 col-md-8 info-div">
+                    <ul id="mytab" class="nav nav-tabs">
+                        <li class="active"><a href="#content1" data-toggle="tab">Server Status</a></li>
+                        <li><a href="#content2" data-toggle="tab">活动日历</a></li>
+                        <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content info-content">
+                        <div class="tab-pane fade in active" id="content1">
+                            <div style="height:500px;">
+                                {{ myechart|safe }}
+                            </div>
+                            <div>
+                                <button type="button" onclick="chartstart()" class="btn btn-default" id="btn-1">Start
+                                </button>
+                                <button type="button" onclick="chartstop(socket_glob)" class="btn btn-default"
+                                        id="btn-2">
+                                    Stop
+                                </button>
+                                <hr>
+                                <form id="emit" action="#">
+                                    <b>Update Frequency(s):</b><input id="emit_data" type="number" max="10" min="1"
+                                                                      maxlength="2">
+                                    <input type="submit" class="btn btn-default" value="Change">
+                                </form>
+                            </div>
                         </div>
-                        <div>
-                            <button type="button" onclick="chartstart()" class="btn btn-default" id="btn-1">Start
-                            </button>
-                            <button type="button" onclick="chartstop(socket_glob)" class="btn btn-default" id="btn-2">
-                                Stop
-                            </button>
+                        <div class="tab-pane" id="content2">
+                            <h2 id="section-100">第一部分</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam
+                                at,
+                                luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante.
+                                Vestibulum id
+                                metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet
+                                sagittis.
+                                In tincidunt orci sit amet elementum vestibulum. Vivamus fermentum in arcu in aliquam.
+                                Quisque
+                                aliquam porta odio in fringilla. Vivamus nisl leo, blandit at bibendum eu, tristique
+                                eget
+                                risus.
+                                Integer aliquet quam ut elit suscipit, id interdum neque porttitor. Integer faucibus
+                                ligula.</p>
                             <hr>
-                            <form id="emit" action="#">
-                                <b>Update Frequency(s):</b><input id="emit_data" type="number" max="10" min="1"
-                                                                  maxlength="2">
-                                <input type="submit" class="btn btn-default" value="Change">
-                            </form>
                         </div>
-                    </div>
-                    <div class="tab-pane" id="content2">
-                        <h2 id="section-100">第一部分</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at,
-                            luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum id
-                            metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet
-                            sagittis.
-                            In tincidunt orci sit amet elementum vestibulum. Vivamus fermentum in arcu in aliquam.
-                            Quisque
-                            aliquam porta odio in fringilla. Vivamus nisl leo, blandit at bibendum eu, tristique eget
-                            risus.
-                            Integer aliquet quam ut elit suscipit, id interdum neque porttitor. Integer faucibus
-                            ligula.</p>
-                        <hr>
-                    </div>
-                    <div class="tab-pane" id="content3">
-                        <div style="width: 100%; padding-left: 10px;">
-                            <button class="btn btn-default" onclick="logon=true;">Start Log</button>
-                            <button class="btn btn-default" onclick="logon=false;">Stop Log</button>
-                            <button class="btn btn-default" onclick="clearlog()">Clear</button>
-                            <hr>
-                            <div id="verbose-log"></div>
+                        <div class="tab-pane" id="content3">
+                            <div style="width: 100%; padding-left: 10px;">
+                                <button class="btn btn-default" onclick="logon=true;">Start Log</button>
+                                <button class="btn btn-default" onclick="logon=false;">Stop Log</button>
+                                <button class="btn btn-default" onclick="clearlog()">Clear</button>
+                                <hr>
+                                <div id="verbose-log"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     </div>
 {% endblock %}
 
@@ -132,11 +136,10 @@
             socket.on('server_response', function (res) {
                 update_mychart(res);
             });
-            $("#verbose-log").html("");
             $("#btn-1").addClass("disabled");
-            document.getElementById("btn-1").setAttribute("disabled", "disabled");
+            $("#btn-1").attr("disabled", true);
             $("#btn-2").removeClass("disabled");
-            document.getElementById("btn-2").removeAttribute("disabled");
+            $("#btn-2").removeAttr("disabled");
         };
 
         function chartstop(socket) {
@@ -144,9 +147,9 @@
             res = {'data': [0, 0, 0, 0, 0]};
             update_mychart(res);
             $("#btn-2").addClass("disabled");
-            document.getElementById("btn-2").setAttribute("disabled", "disabled");
+            $("#btn-2").attr("disabled", true);
             $("#btn-1").removeClass("disabled");
-            document.getElementById("btn-1").removeAttribute("disabled");
+            $("#btn-1").removeAttr("disabled");
         };
 
         function clearlog() {
