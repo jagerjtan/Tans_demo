@@ -8,7 +8,7 @@ from app.models import Admin, Adminlog, Member
 from app.decorators import admin_login_req
 from app.socketios import socketio
 from app.charts import server_status
-import shutil
+import shutil,uuid
 
 
 @admin.route("/", methods=['GET'])
@@ -116,7 +116,8 @@ def register():
             nickname=nickname,
             face=face_name,
             mobile=data['mobile'],
-            pwd=generate_password_hash(data['pwd'])
+            pwd=generate_password_hash(data['pwd']),
+            uuid=uuid.uuid4().hex
         )
         try:
             db.session.add(member)

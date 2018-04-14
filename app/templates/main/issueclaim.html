@@ -1,0 +1,137 @@
+{% extends "ui/mainbase.html" %}
+{% block title %}
+    添加记录
+{% endblock %}
+{% block css %}
+    <style>
+        .btn-default:active,
+        .btn-default.active,
+        .open > .dropdown-toggle.btn-default {
+            color: snow;
+            background-color: #286090;
+        }
+
+        .btn-default:active:hover,
+        .btn-default.active:hover,
+        .open > .dropdown-toggle.btn-default:hover,
+        .btn-default:active:focus,
+        .btn-default.active:focus,
+        .open > .dropdown-toggle.btn-default:focus,
+        .btn-default:active.focus,
+        .btn-default.active.focus,
+        .open > .dropdown-toggle.btn-default.focus {
+            color: snow;
+            background-color: #286090;
+        }
+
+        .info-div {
+            padding: 0px;
+        }
+
+        .info-content {
+            padding-top: 10px;
+
+        }
+    </style>
+{% endblock %}
+{% block sidebar %}
+    {% include "ui/mainsidebar.html" %}
+{% endblock %}
+{% block main %}
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <form action="#" method="post" class="form-group">
+                            <h2 class="form-signin-heading">申请报销项目</h2>
+                            <hr>
+                            <div class="info-div">
+                                <ul id="mytab" class="nav nav-tabs">
+                                    <li class="active"><a href="#content1" data-toggle="tab">公共</a></li>
+                                    <li><a href="#content2" data-toggle="tab">个人</a></li>
+                                    <li><a href="#content3" data-toggle="tab">其他</a></li>
+                                </ul>
+                                <div id="myTabContent" class="tab-content info-content">
+                                    <div class="tab-pane fade in active" id="content1">
+                                        <div class="" data-toggle="buttons">
+                                            {% for subfield in subsets[0:8] %}
+                                                <label class="btn btn-default">
+                                                    {{ subfield }}{{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
+                                            {% for err in form.category.errors %}
+                                                <div class="col-md-12">
+                                                    <p style="color: red">{{ err }}</p>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="content2">
+                                        <div class="" data-toggle="buttons">
+                                            {% for subfield in subsets[8:12] %}
+                                                <label class="btn btn-default">
+                                                    {{ subfield }}{{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
+                                            {% for err in form.category.errors %}
+                                                <div class="col-md-12">
+                                                    <p style="color: red">{{ err }}</p>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="content3">
+                                        <div class="" data-toggle="buttons">
+                                            {% for subfield in subsets[12:] %}
+                                                <label class="btn btn-default">
+                                                    {{ subfield }}{{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
+                                            {% for err in form.category.errors %}
+                                                <div class="col-md-12">
+                                                    <p style="color: red">{{ err }}</p>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group has-feedback">
+                                数额
+                                {{ form.amount }}
+                                {% for err in form.amount.errors %}
+                                    <div class="col-md-12">
+                                        <p style="color: red">{{ err }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group has-feedback">
+                                备注
+                                {{ form.content }}
+                                {% for err in form.content.errors %}
+                                    <div class="col-md-12">
+                                        <p style="color: red">{{ err }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                </div>
+                                <div class="col-xs-6">
+                                    {{ form.submit }}
+                                    {{ form.csrf_token }}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+{% block script %}
+
+{% endblock %}

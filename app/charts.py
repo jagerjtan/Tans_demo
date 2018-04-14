@@ -1,5 +1,5 @@
 # coding:utf8
-from pyecharts import Bar
+from pyecharts import Bar, Pie
 
 
 # 四核CPU折线图
@@ -29,9 +29,18 @@ def server_status():
     bar = Bar()
     bar.chart_id = "serverow"
     bar.width = "100%"
-    label_color = ["#a0a7e6","#3fb1e3","#6be6c1","#626c91","#c4ebad"]
+    label_color = ["#a0a7e6", "#3fb1e3", "#6be6c1", "#626c91", "#c4ebad"]
     bar.add("Win10", attr, v1, yaxis_max=100,
             is_stack=True, is_label_show=True,
             bar_category_gap="5%", label_color=label_color)
     return bar.render_embed()
 
+
+def home_basic(home):
+    attr = ["债务","资产", "现金"]
+    v1 = [home.debt, home.asset, home.cash]
+    pie = Pie("资产概览")
+    pie.id = "home_basic"
+    pie.width = "100%"
+    pie.add("",attr,v1,is_label_show=True)
+    return pie.render_embed()

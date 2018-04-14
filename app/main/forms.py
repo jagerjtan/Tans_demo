@@ -1,8 +1,9 @@
 # coding: utf8
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField, SelectField, SelectMultipleField
+from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField, SelectField, SelectMultipleField, \
+    FloatField, RadioField
 from wtforms.validators import DataRequired, ValidationError, EqualTo
-from app.models import Member
+from app.models import Member, Home
 
 
 class LoginForm(FlaskForm):
@@ -93,5 +94,132 @@ class PwdForm(FlaskForm):
             account=name
         ).first()
         if not member.check_pwd(pwd):
-            print('haha')
             raise ValidationError("操作有误！")
+
+
+class AddHomeForm(FlaskForm):
+    """添加Home记录表单"""
+    account = StringField(
+        label="识别号",
+        validators=[
+            DataRequired("请输入识别号")
+        ],
+        description="identity name",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "Identity Name"
+        }
+    )
+    nickname = StringField(
+        label="Nickname",
+        validators=[
+            DataRequired("Please enter a nickname")
+        ],
+        description="nickname",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "Nick Name"
+        }
+    )
+    net_asset = FloatField(
+        label="Net Asset",
+        validators=[
+            DataRequired("Please enter a valid number")
+        ],
+        description="Net Asset",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "Net Asset"
+        }
+    )
+    asset = FloatField(
+        label="Asset",
+        validators=[
+            DataRequired("Please enter valid number")
+        ],
+        description="Asset",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "Asset"
+        }
+    )
+    debt = FloatField(
+        label="Debt",
+        validators=[
+            DataRequired("Please enter a valid number")
+        ],
+        description="Debt",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "Net Asset"
+        }
+    )
+    cash = FloatField(
+        label="Cash",
+        validators=[
+            DataRequired("Please enter a valid number")
+        ],
+        description="Cash",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "Cash"
+        }
+    )
+    submit = SubmitField(
+        "提交",
+        render_kw={
+            "class": "btn btn-primary"
+        }
+    )
+
+    def validate_account(self, field):
+        account = field.data
+        home = Home.query.filter_by(account=account).count()
+        if home > 0:
+            raise ValidationError("Home名已存在")
+
+
+class IssueDailyLogForm(FlaskForm):
+    """申报项目表单"""
+    category = RadioField(
+        label='集体项目',
+        validators=[
+            DataRequired("Please pick one!")
+        ],
+        coerce=str,
+        choices=[],
+        render_kw={
+            "type": "radio",
+            "name ": "options",
+            "autocomplete": "off",
+        }
+    )
+    amount = FloatField(
+        label="数额",
+        validators=[
+            DataRequired("必须输入一个数额")
+        ],
+        render_kw={
+            "class": "form-control",
+            "placeholder": "请输入数额"
+        }
+    )
+    content = TextAreaField(
+        label="备注",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "请写下简单描述, 如:买菜, 电费, 车险"
+        }
+    )
+    submit = SubmitField(
+        "提交",
+        render_kw={
+            "class": "btn btn-primary btn-block"
+        }
+    )
+
+    def validate_type(self, field):
+        type = field.data
+        if type == None:
+            raise ValidationError("必须选择其中一项")
+

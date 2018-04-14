@@ -1,12 +1,117 @@
 {% extends 'ui/mainbase.html' %}
+{% import "ui/pages.html" as pg %}
 {% block title %}Tan's Home{% endblock %}
 
-{% block css %}{% endblock %}
-{% block sidebar %}
+{% block css %}
+    <style>
+        .info-div {
+            padding: 0px;
+        }
 
+        .info-content {
+            padding-top: 5px;
+            border-left: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+            border-right: 1px solid #dddddd;
+        }
+    </style>
+{% endblock %}
+{% block sidebar %}
+    {% include "ui/mainsidebar.html" %}
 {% endblock %}
 
 {% block main %}
-
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0px;">
+        <section>
+            <div class="row">
+                <div class="alert alert-info col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    {#                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>#}
+                    <h4><b>公告</b></h4>
+                    Hello!
+                </div>
+            </div>
+            <div class="row" style="text-align: center;">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <a class="btn btn-default btn-lg" href="{{ url_for("main.issueincome") }}">加入贡献</a>
+                    <a class="btn btn-default btn-lg" href="{{ url_for("main.issueclaim") }}">申报报销</a>
+                </div>
+            </div>
+            <div class="row">
+                <hr>
+                <div style="padding-left: 20px;">
+                    <p><b>今日收入:</b></p>
+                    <p><b>今日支出:</b></p>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-10 col-xs-12 info-div">
+                    <ul id="mytab" class="nav nav-tabs">
+                        <li class="active"><a href="#content1" data-toggle="tab">最近</a></li>
+                        <li><a href="#content2" data-toggle="tab">历史</a></li>
+                        <li><a href="#content3" data-toggle="tab">本月固定项目</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content info-content">
+                        <div class="tab-pane fade in active" id="content1">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>日期</th>
+                                        <th>数额</th>
+                                        <th>成员</th>
+                                        <th>类型/项目</th>
+                                        {#                                        <th>备注</th>#}
+                                        {#                                        <th>选项</th>#}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for v in logs.items %}
+                                        {% if v.status == 'pending' %}
+                                            <tr class="warning">
+                                                {% else %}
+                                            <tr>
+                                        {% endif %}
+                                    <td>{{ v.addtime }}</td>
+                                    <td>{{ v.amount }}元</td>
+                                    <td>{{ v.member_id }}</td>
+                                    <td>
+                                        {% if v.type == '收入' %}
+                                            <a href="#" class="label label-success">{{ v.type }}</a>
+                                        {% else %}
+                                            <a href="#" class="label label-default">{{ v.type }}</a>
+                                        {% endif %}
+                                        /{{ v.category }}
+                                    </td>
+                                    {#                                    <td>{{ v.content }}</td>#}
+                                    {#                                    <td>#}
+                                    {#                                        <a href="#" class="label label-success">编辑</a>#}
+                                    {#                                        &nbsp;#}
+                                    {#                                        <a href="#" class="label label-danger">删除</a>#}
+                                    {#                                    </td>#}
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box-footer clearfix" style="width: 350px;margin: auto;display: block;">
+                                {{ pg.page(logs,'main.index') }}
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="content2"><p>历史</p></div>
+                        <div class="tab-pane" id="content3"><p>备用</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}
-{% block script %}{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("#n-1").addClass("active");
+            $("#bn-1").addClass("active");
+            $("#section-1").addClass("active");
+        });
+    </script>
+{% endblock %}

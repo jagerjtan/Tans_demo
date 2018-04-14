@@ -1,0 +1,121 @@
+{% extends "ui/mainbase.html" %}
+{% block title %}数据记录{% endblock %}
+{% block css %}
+    <script src="{{ url_for('static',filename='js/echarts.min.js') }}"></script>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "ui/mainsidebar.html" %}
+{% endblock %}
+
+{% block main %}
+    <!--捕捉添加HOME表单的错误信息，显示模态框-->
+    {% if form.errors %}
+        <script>
+            $(function () {
+                $('#addHome').modal(
+                    'show'
+                )
+            });
+        </script>
+    {% endif %}
+    <!--错误消息捕捉-->
+
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0px;">
+        <section>
+            <div class="row">
+                <div id="chartdiv" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">{{ myechart|safe }}</div>
+                <div id="infodiv" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#addHome">Create Home</a>
+                <p>历史记录</p>
+            </div>
+        </section>
+
+
+    </div>
+    <form class="form-group" role="form" action="#" method="post">
+        <div class="modal fade" id="addHome" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="addHomeModalLabel" style="margin-top: 60px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button data-dismiss="modal" class="close" type="button"><span
+                                aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">添加Home</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group has-feedback">
+                            <label for="input_account">{{ form.account.label }}</label>
+                            {{ form.account }}
+                            {% for err in form.account.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_nickname">{{ form.nickname.label }}</label>
+                            {{ form.nickname }}
+                            {% for err in form.nickname.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_net_asset">{{ form.net_asset.label }}</label>
+                            {{ form.net_asset }}
+                            {% for err in form.net_asset.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_asset">{{ form.asset.label }}</label>
+                            {{ form.asset }}
+                            {% for err in form.asset.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_debt">{{ form.debt.label }}</label>
+                            {{ form.debt }}
+                            {% for err in form.debt.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_cash">{{ form.cash.label }}</label>
+                            {{ form.cash }}
+                            {% for err in form.cash.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        {{ form.csrf_token }}
+                        {{ form.submit }}
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!--addHomeModal-->
+    </form>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
