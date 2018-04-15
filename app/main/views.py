@@ -192,20 +192,22 @@ def issueincome():
         return redirect(url_for("main.home"))
     return render_template("main/issueincome.html", form=form, subsets=subsets)
 
-@main.route("/memberlist/<int:page>/", methods=['GET','POST'])
+
+@main.route("/memberlist/<int:page>/", methods=['GET', 'POST'])
 @member_login_req
 def memberlist(page=None):
     if page == None:
-        page =1
+        page = 1
     page_data = Member.query.order_by(
         Member.id
     ).paginate(page=page, per_page=6)
     return render_template('main/memberlist.html', page_data=page_data)
 
-@main.route("/memberdetail/<int:id>/", methods=['GET','POST'])
+
+@main.route("/memberdetail/<int:id>/", methods=['GET', 'POST'])
 @member_login_req
 def memberdetail(id=None):
     if id == None:
         id = 1
     member = Member.query.filter_by(id=id).first()
-    return render_template('main/memberdetail.html',id=id, member=member)
+    return render_template('main/memberdetail.html', id=id, member=member)

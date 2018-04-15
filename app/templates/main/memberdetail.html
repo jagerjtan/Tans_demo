@@ -1,6 +1,6 @@
 <style>
     .memIcon {
-        width: 100px;
+        width: 50%;
         border-radius: 95%;
         margin: auto;
         position: relative;
@@ -8,15 +8,18 @@
     }
 </style>
 <div class="modal-body">
-    <div class="row">
+    <div class="row" style="text-align: center;">
         <img class="memIcon" src="{{ url_for('static',filename='uploads/members/'+member.face) }}"
              alt="">
+        <br>
+        <p style="font-size: larger"><b>{{ member.nickname }}</b></p>
     </div>
     <hr>
-    <div class="row">
-        <div class="col-xs-10 col-xs-offset-2">
-            <p>Nickname: {{ member.nickname }}</p>
-            <p>Mobile: {{ member.mobile }}</p>
+    <div class="row" style="padding-left: 15px;">
+        <div class="col-xs-12">
+            <p><b>号码:</b> {{ member.mobile }}</p>
+            <p><b>最近登录:</b> {{ member.memberlogs[-1].addtime }}</p>
+            <p><b>位置:</b> {{ member.memberlogs[-1].ip }}</p>
         </div>
     </div>
     <hr>

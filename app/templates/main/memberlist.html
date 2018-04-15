@@ -30,6 +30,12 @@
                             <div style="width: 50%;float: left">
                                 <p>{{ v.nickname }}</p>
                                 <p>{{ v.mobile }}</p>
+                                {% for log in v.memberlogs %}
+                                    {% if loop.last %}
+                                        {{ log.addtime }}
+                                    {% endif %}
+                                {% endfor %}
+                                <p></p>
                                 <button type="button" class="btn btn-default" data-toggle="modal"
                                         data-target="#myModal"
                                         onclick="get_detail({{ v.id }})">
@@ -52,17 +58,17 @@
         </section>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top: 30px; ">
         <div class="modal-dialog">
             <div class="modal-content" id="m-1"></div><!-- /.modal-content -->
-            </div>
-        </div><!-- /.modal-dialog -->
+        </div>
+    </div><!-- /.modal-dialog -->
     </div>
 {% endblock %}
 {% block script %}
     <script>
-        function get_detail(e) {
-            $("#m-1").load("/memberdetail/" + e)
+        function get_detail(id) {
+            $("#m-1").load("/memberdetail/" + id)
         }
     </script>
 {% endblock %}
