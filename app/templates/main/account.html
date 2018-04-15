@@ -39,7 +39,6 @@
         }
 
         .info-content {
-            height: 300px;
             padding: 15px;
             border-left: 1px solid #dddddd;
             border-bottom: 1px solid #dddddd;
@@ -84,7 +83,7 @@
                             <p><strong>登录位置:</strong></p>
                         </div>
                         <div style="float: left;text-align: left;70%; padding-left: 15px;">
-                            <p>{{ data.name }}</p>
+                            <p>{{ data.nickname }}</p>
                             <p>{{ data.last_login }}</p>
                             <p>{{ data.ip }}</p>
                         </div>
@@ -95,7 +94,7 @@
                             <a tabindex="0" class="btn btn-default" role="button"
                                data-toggle="popover"
                                data-placement="bottom" data-trigger="focus" data-html="True"
-                               data-content='<div id="setting-pop"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a></div>'>设置</a>
+                               data-content='<div id="setting-pop"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a><a href="{{ url_for("main.account_edit", id=session['member_id']) }}">编辑信息</a></div>'>设置</a>
                         </div>
                     </div>
 
@@ -116,7 +115,9 @@
                                 <div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel"
                                      aria-labelledby="collapseListGroupHeading1" aria-expanded="true" style="">
                                     <ul class="list-group">
-                                        <li class="list-group-item"><a href="#">编辑个人信息</a></li>
+                                        <li class="list-group-item"><a
+                                                href="{{ url_for("main.account_edit",id=session['member_id']) }}">编辑个人信息</a>
+                                        </li>
                                         <li class="list-group-item"><a href="#" data-toggle="modal"
                                                                        data-target="#my1stModal">修改密码</a>
                                         </li>
@@ -135,12 +136,44 @@
             <div class="row">
                 <div class="col-md-12 col-lg-10 col-xs-12 info-div">
                     <ul id="mytab" class="nav nav-tabs">
-                        <li class="active"><a href="#content1" data-toggle="tab">Timeline</a></li>
+                        <li class="active"><a href="#content1" data-toggle="tab">最近活动</a></li>
                         <li><a href="#content2" data-toggle="tab">活动日历</a></li>
                         <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content info-content">
-                        <div class="tab-pane fade in active" id="content1">Insert Timeline</div>
+                        <div class="tab-pane fade in active" id="content1">
+                            <table class="table table-hover" style="margin-bottom: 0px">
+                                <thead>
+                                <tr>
+                                    <th>状态</th>
+                                    <th>日期</th>
+                                    <th>数额</th>
+                                    <th>类型/项目</th>
+                                    {#                                        <th>备注</th>#}
+                                    {#                                        <th>选项</th>#}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for log in dailylogs %}
+                                    {% if loop.index < 10 %}
+                                    <tr>
+                                        <td>{{ log.status }}</td>
+                                        <td>{{ log.addtime.strftime('%m-%d') }}</td>
+                                        <td>{{ log.amount }}元</td>
+                                        <td>
+                                            {% if log.type == '收入' %}
+                                                <a href="#" class="label label-success">{{ log.type }}</a>
+                                            {% else %}
+                                                <a href="#" class="label label-default">{{ log.type }}</a>
+                                            {% endif %}
+                                            /{{ log.category }}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="tab-pane" id="content2"><p>Insert Calender</p></div>
                         <div class="tab-pane" id="content2"><p>Insert verbose log</p></div>
                     </div>

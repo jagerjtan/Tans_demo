@@ -1,0 +1,75 @@
+{% extends "ui/mainbase.html" %}
+
+{% block title %}
+    Edit
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block main %}
+    <div class="col-lg-8 col-xs-12">
+        <form class="form-group" method="POST" enctype="multipart/form-data" role="form">
+            <h2 class="form-signin-heading">修改个人信息</h2>
+            <div class="form-group has-feedback">
+                {{ form.nickname.label }}
+                {{ form.nickname }}
+                {% for err in form.nickname.errors %}
+                    <div class="col-md-12">
+                        <p style="color: red">{{ err }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group has-feedback">
+                {{ form.mobile.label }}
+                {{ form.mobile }}
+                {% for err in form.mobile.errors %}
+                    <div class="col-md-12">
+                        <p style="color: red">{{ err }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group has-feedback">
+                {{ form.birthday.label }}
+                {{ form.birthday }}
+                {% for err in form.birthday.errors %}
+                    <div class="col-md-12">
+                        <p style="color: red">{{ err }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group has-feedback">
+                {{ form.info.label }}
+                {{ form.info }}
+                {% for err in form.info.errors %}
+                    <div class="col-md-12">
+                        <p style="color: red">{{ err }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group has-feedback">
+                {{ form.face.label }}
+                {{ form.face }}
+                {% for err in form.face.errors %}
+                    <div class="col-md-12">
+                        <p style="color: red">{{ err }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-xs-5">
+                </div>
+                <div class="col-xs-7">
+                    <a href="{{ url_for("main.account",id=session['member_id']) }}" class="btn btn-default btn-lg" role="button">返回</a>
+                    {{ form.submit }}
+                    {{ form.csrf_token }}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

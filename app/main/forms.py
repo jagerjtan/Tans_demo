@@ -1,8 +1,9 @@
 # coding: utf8
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField, SelectField, SelectMultipleField, \
-    FloatField, RadioField
-from wtforms.validators import DataRequired, ValidationError, EqualTo
+    FloatField, RadioField,DateField
+from flask_wtf.file import FileAllowed, FileRequired
+from wtforms.validators import DataRequired, ValidationError, EqualTo, Regexp
 from app.models import Member, Home
 
 
@@ -223,3 +224,51 @@ class IssueDailyLogForm(FlaskForm):
         if type == None:
             raise ValidationError("必须选择其中一项")
 
+class AccountEditForm(FlaskForm):
+    """修改资料表单"""
+    nickname = StringField(
+        label="名字",
+        render_kw={
+            "class":"form-control",
+            "placeholder":"请输入一个新名字, 留空则保持原名"
+        }
+    )
+    mobile = StringField(
+        label="手机号码",
+        validators=[
+            Regexp("1[3458]\\d{9}",message="手机格式不正确,请检查是否多写或少写了数字")
+        ],
+        description="联系号码",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "请输入11位手机号码, 留空则保持原号码不变"
+        }
+    )
+    birthday = DateField(
+        label="出生日期",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "按照 19xx-xx-xx 格式输入, 不填请留空"
+        }
+    )
+    info = TextAreaField(
+        label="个人简介",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "随意填写"
+        }
+    )
+    face = FileField(
+        label="头像",
+        validators=[
+            FileAllowed(['jpg','png','jpeg'],message='只能上传图片')
+            # FileRequired('文件未选择')
+        ],
+        description="头像"
+    )
+    submit = SubmitField(
+        "提交",
+        render_kw={
+            "class": "btn btn-primary btn-lg"
+        }
+    )

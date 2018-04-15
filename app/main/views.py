@@ -1,11 +1,17 @@
 # coding: utf8
 from . import main
-from app import db
+from app import db,app
 from flask import render_template, url_for, redirect, flash, request, session
-from app.main.forms import LoginForm, PwdForm, AddHomeForm, IssueDailyLogForm
+from app.main.forms import LoginForm, PwdForm, AddHomeForm, IssueDailyLogForm, AccountEditForm
 from app.models import Member, Memberlog, Home, DailyLog
 from app.decorators import member_login_req
-import uuid
+import uuid, os, datetime
+from werkzeug.utils import secure_filename
+
+def change_filename(filename):
+    fileinfo = os.path.splitext(filename)
+    filename = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + str(uuid.uuid4().hex) + fileinfo[-1]
+    return filename
 
 
 @main.route("/", methods=['GET'])
@@ -77,11 +83,14 @@ def account(id=None):
         member = Member.query.filter_by(account=session['member']).first()
         last_memberlogin = member.memberlogs[-1]
         data = {
-            'name': member.account,
+            'nickname': member.nickname,
             'last_login': last_memberlogin.addtime,
             'ip': last_memberlogin.ip,
             'face': member.face
         }
+        dailylogs=[*member.dailylogs]
+        dailylogs.reverse()
+
     except BaseException as e:
         flash(e, "err")
     form1 = PwdForm()
@@ -92,11 +101,47 @@ def account(id=None):
         db.session.commit()
         flash("修改密码成功，请重新登录！", "ok")
         return redirect(url_for("main.logout"))
+
     #
     # 预留form2给其他修改表单，例如编辑信息，增删查改记录
     #
+    return render_template("main/account.html", id=id, form1=form1, data=data, dailylogs=dailylogs)
 
-    return render_template("main/account.html", id=id, form1=form1, data=data)
+
+@main.route("/account_edit/<int:id>", methods=['GET', 'POST'])
+@member_login_req
+def account_edit(id):
+    member = Member.query.get_or_404(int(id))
+    form = AccountEditForm()
+    # form.face.validators=[]
+    if request.method == 'GET':
+        form.nickname.data = member.nickname
+        form.mobile.data = member.mobile
+        form.birthday.data = member.birthday
+        form.info.data = member.info
+    if form.validate_on_submit():
+        data = form.data
+
+        if form.face.data:
+            file_url = secure_filename(form.face.data.filename)
+            member.face = change_filename(file_url)
+            form.face.data.save(app.config["MEM_DIR"]+member.face)
+
+        member.nickname = data['nickname']
+        member.mobile = data['mobile']
+        member.info=data['info']
+        member.birthday=data['birthday']
+
+        try:
+            db.session.add(member)
+            db.session.commit()
+        except BaseException:
+            db.session.roll()
+            flash("Errors!","err")
+            return redirect(url_for("main.account_eidt", id=id))
+        flash("Edit done", "ok")
+        return redirect(url_for("main.account", id=id))
+    return render_template("main/account_edit.html", form=form, id=id)
 
 
 @main.route("/database/", methods=['GET', 'POST'])

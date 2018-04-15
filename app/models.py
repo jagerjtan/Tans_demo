@@ -98,7 +98,7 @@ class Homelog(db.Model):
     edit_log = db.Column(db.Text)  # 修改内容
 
     def __repr__(self):
-        return "<Home %r>" % self.id
+        return "<Homelog %r>" % self.id
 
 
 class DailyLog(db.Model):
