@@ -20,6 +20,18 @@
             height: 90%;
             border-radius: 90%;
         }
+        .popover{
+            background-color: black;
+            width: auto;
+            background-clip: unset;
+            -webkit-background-clip: unset;
+            border:0;
+            padding: 0;
+            animation: unset;
+        }
+        .popover-content{
+            padding: 0;
+        }
     </style>
     <style>
         .nav {
@@ -47,16 +59,6 @@
 
         .btm-text {
             font-size: 10px;
-        }
-
-        .btm-pop {
-            width: 100px;
-            line-height: 300%;
-        }
-
-        .btm-pop ul {
-            list-style: none;
-            padding-left: 0px;
         }
     </style>
     {% block css %}{% endblock %}
@@ -180,7 +182,7 @@
                     <a tabindex="0" class="btn" role="button"
                        data-toggle="popover"
                        data-placement="top" data-trigger="focus" data-html="True"
-                       data-content='<div class="btm-pop"><ul><li><a href="{{ url_for('main.database') }}">Core Console</a></li><li><a href="#">test</a></li><li><a href="#">成员</a></li></ul></div>'>
+                       data-content='{% include 'ui/in_popover.html' %}'>
                         <span class="glyphicon glyphicon-align-justify btm-logo"></span>
                         <br>
                         <span class="btm-text">其他</span>

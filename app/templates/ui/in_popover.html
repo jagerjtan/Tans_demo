@@ -1,0 +1,28 @@
+<style>
+    .btm-pop {
+        width: 150px;
+    }
+
+    .popbtn{
+        background-color: black;
+        height: 50px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+    .popbtn a{
+        text-decoration: none;
+        outline:none;
+        color: #dddddd;
+    }
+</style>
+<body>
+<div class="btm-pop">
+    <table class="table tab-pane popbtn" style="text-align: center;margin-bottom: 0px;">
+        <tbody>
+        <tr><td><a href="{{ url_for("main.database") }}">数据库</a></td></tr>
+        <tr><td><a href="{{ url_for("main.memberlist",page=1) }}">成员</a></td></tr>
+        <tr><td><a href="{{ url_for("main.database") }}">通用</a></td></tr>
+        </tbody>
+    </table>
+</div>

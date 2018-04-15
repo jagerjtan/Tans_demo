@@ -1,0 +1,68 @@
+{% extends "ui/mainbase.html" %}
+{% import "ui/pages.html" as pg %}
+{% block title %} 成员列表 {% endblock %}
+{% block css %}
+    <style>
+        .membericon {
+            width: 80%;
+            border-radius: 95%;
+            margin: auto;
+            position: relative;
+            display: block;
+        }
+    </style>
+{% endblock %}
+{% block sidebar %}
+    {% include "ui/mainsidebar.html" %}
+{% endblock %}
+{% block main %}
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0;">
+        <section>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding: 0px 5px;">
+                    {% for v in page_data.items %}
+                        <div class="col-xs-12 col-lg-9"
+                             style="box-shadow: 0 5px 3px 3px #ebf2ff; margin-bottom: 10px;padding:5px;">
+                            <div style="width: 30%;float:left;">
+                                <img class="membericon" src="{{ url_for('static',filename='uploads/members/'+v.face) }}"
+                                     alt="">
+                            </div>
+                            <div style="width: 50%;float: left">
+                                <p>{{ v.nickname }}</p>
+                                <p>{{ v.mobile }}</p>
+                                <button type="button" class="btn btn-default" data-toggle="modal"
+                                        data-target="#myModal"
+                                        onclick="get_detail({{ v.id }})">
+                                    查看详细
+                                </button>
+                            </div>
+
+
+                            <div style="width: 20%;float: left;">
+                                <a href="#">查看</a><br>
+                                <a href="#">冻结/解除</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="box-footer clearfix" style="width: 350px;margin: auto;display: block;">
+                        {{ pg.page(page_data,'main.memberlist') }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content" id="m-1"></div><!-- /.modal-content -->
+            </div>
+        </div><!-- /.modal-dialog -->
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        function get_detail(e) {
+            $("#m-1").load("/memberdetail/" + e)
+        }
+    </script>
+{% endblock %}
