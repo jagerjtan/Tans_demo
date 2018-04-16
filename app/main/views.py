@@ -1,12 +1,13 @@
 # coding: utf8
 from . import main
-from app import db,app
+from app import db, app
 from flask import render_template, url_for, redirect, flash, request, session
 from app.main.forms import LoginForm, PwdForm, AddHomeForm, IssueDailyLogForm, AccountEditForm
 from app.models import Member, Memberlog, Home, DailyLog
 from app.decorators import member_login_req
 import uuid, os, datetime
 from werkzeug.utils import secure_filename
+
 
 def change_filename(filename):
     fileinfo = os.path.splitext(filename)
@@ -32,7 +33,16 @@ def index(page=None):
         with db.session.no_autoflush:
             item.member_id = Member.query.filter_by(id=item.member_id).first().nickname
             item.addtime = item.addtime.strftime('%m-%d')
-    return render_template("main/index.html", logs=logs)
+
+    today = datetime.datetime.now()
+    costlist, incomelist = [], []
+    for item in logs.items:
+        if item.addtime == today.strftime("%m-%d"):
+            costlist.append(item.amount if item.type == '支出' else 0)
+            incomelist.append(item.amount if item.type == '收入' else 0)
+
+    data = {'today':today.strftime("%Y-%m-%d %A"), 'income': sum(incomelist), 'cost': sum(costlist)}
+    return render_template("main/index.html", logs=logs, data=data)
 
 
 @main.route("/login/", methods=['GET', 'POST'])
@@ -77,7 +87,7 @@ def logout():
 @member_login_req
 def account(id=None):
     data = {}
-    if id == 202:
+    if id == None:
         id = int(session['member_id'])
     try:
         member = Member.query.filter_by(account=session['member']).first()
@@ -88,7 +98,7 @@ def account(id=None):
             'ip': last_memberlogin.ip,
             'face': member.face
         }
-        dailylogs=[*member.dailylogs]
+        dailylogs = [*member.dailylogs]
         dailylogs.reverse()
 
     except BaseException as e:
@@ -125,19 +135,19 @@ def account_edit(id):
         if form.face.data:
             file_url = secure_filename(form.face.data.filename)
             member.face = change_filename(file_url)
-            form.face.data.save(app.config["MEM_DIR"]+member.face)
+            form.face.data.save(app.config["MEM_DIR"] + member.face)
 
         member.nickname = data['nickname']
         member.mobile = data['mobile']
-        member.info=data['info']
-        member.birthday=data['birthday']
+        member.info = data['info']
+        member.birthday = data['birthday']
 
         try:
             db.session.add(member)
             db.session.commit()
         except BaseException:
             db.session.roll()
-            flash("Errors!","err")
+            flash("Errors!", "err")
             return redirect(url_for("main.account_eidt", id=id))
         flash("Edit done", "ok")
         return redirect(url_for("main.account", id=id))
@@ -256,3 +266,27 @@ def memberdetail(id=None):
         id = 1
     member = Member.query.filter_by(id=id).first()
     return render_template('main/memberdetail.html', id=id, member=member)
+
+
+@main.route("/log_detail/<int:id>", methods=['GET'])
+@member_login_req
+def log_detail(id=None):
+    if id == None:
+        id = 1
+    log = DailyLog.query.filter_by(id=id).first()
+    log.test = Member.query.filter_by(id=log.member_id).first().nickname
+    return render_template("main/log_detail.html", id=id, log=log)
+
+
+@main.route("/log_del/<int:id>/", methods=['GET'])
+@member_login_req
+def log_del(id=None):
+    auth = DailyLog.query.filter_by(id=id).first().member_id
+    if id == None:
+        flash("错误链接", "err")
+        return redirect(url_for("main.home"))
+    elif session['member_id'] != auth:
+        flash("你没有权限", "err")
+        return redirect(url_for("main.home"))
+    flash("ok", "ok")
+    return redirect(url_for("main.home"))

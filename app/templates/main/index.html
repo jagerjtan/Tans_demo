@@ -14,6 +14,10 @@
             border-bottom: 1px solid #dddddd;
             border-right: 1px solid #dddddd;
         }
+
+        .logconent {
+            font-size: 18px;
+        }
     </style>
 {% endblock %}
 {% block sidebar %}
@@ -38,9 +42,10 @@
             </div>
             <div class="row">
                 <hr>
-                <div style="padding-left: 20px;">
-                    <p><b>今日收入:</b></p>
-                    <p><b>今日支出:</b></p>
+                <div style="padding-left: 20px;font-size: 18px;">
+                    <p><b>今天: </b>{{ data.today }}</p>
+                    <p><b>收入: </b>{{ data.income }} 元</p>
+                    <p><b>支出: </b>{{ data.cost }} 元</p>
                 </div>
                 <hr>
             </div>
@@ -61,19 +66,19 @@
                                         <th>数额</th>
                                         <th>成员</th>
                                         <th>类型/项目</th>
-                                        {#                                        <th>备注</th>#}
-                                        {#                                        <th>选项</th>#}
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for v in logs.items %}
                                         {% if v.status == 'pending' %}
-                                            <tr class="warning">
+                                            <tr class="warning logconent" onclick="get_detail({{ v.id }})"
+                                                data-toggle="modal" data-target="#myModal">
                                                 {% else %}
-                                            <tr>
+                                            <tr class="logconent" onclick="get_detail({{ v.id }})" data-toggle="modal"
+                                                data-target="#myModal">
                                         {% endif %}
-                                    <td>{{ v.addtime }}</td>
-                                    <td>{{ v.amount }}元</td>
+                                    <td><b>{{ v.addtime }}</b></td>
+                                    <td>{{ v.amount }}</td>
                                     <td>{{ v.member_id }}</td>
                                     <td>
                                         {% if v.type == '收入' %}
@@ -83,12 +88,6 @@
                                         {% endif %}
                                         /{{ v.category }}
                                     </td>
-                                    {#                                    <td>{{ v.content }}</td>#}
-                                    {#                                    <td>#}
-                                    {#                                        <a href="#" class="label label-success">编辑</a>#}
-                                    {#                                        &nbsp;#}
-                                    {#                                        <a href="#" class="label label-danger">删除</a>#}
-                                    {#                                    </td>#}
                                     </tr>
                                     {% endfor %}
                                     </tbody>
@@ -105,9 +104,20 @@
             </div>
         </section>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         style="margin-top: 30px; ">
+        <div class="modal-dialog">
+            <div class="modal-content" id="m-1"></div><!-- /.modal-content -->
+        </div>
+    </div><!-- /.modal-dialog -->
 {% endblock %}
 {% block script %}
     <script>
+        function get_detail(id) {
+            $("#m-1").load("/log_detail/" + id)
+        }
+
         $(document).ready(function () {
             $("#n-1").addClass("active");
             $("#bn-1").addClass("active");

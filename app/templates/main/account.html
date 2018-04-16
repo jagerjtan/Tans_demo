@@ -24,10 +24,7 @@
 
         #logo-btn {
             width: 55px;
-            margin: auto;
-            position: relative;
-            display: block;
-            height: 100%;
+        {#margin: auto;#}{#position: relative;#}{#display: block;#} height: 100%;
         }
 
         #setting-pop {
@@ -76,7 +73,7 @@
                 </div><!--1st col-->
                 <!-- 2nd Col -->
                 <div class="col-md-8 col-lg-6 col-xs-12 col-sm-12 mylogoinfo" style="float: left; height: 100%;">
-                    <div class="col-xs-12 col-lg-10 col-md-8" style="padding: 15px;">
+                    <div class="col-xs-12 col-lg-9 col-md-9" style="padding: 15px;">
                         <div style="float:left;text-align: right;width: 30%;">
                             <p><strong>成员:</strong></p>
                             <p><strong>最近登录:</strong></p>
@@ -89,12 +86,14 @@
                         </div>
                     </div>
 
-                    <div class="hidden-xs hidden-sm col-lg-2 col-md-2" style="height: 200px; padding: 10px;">
+                    <div class="hidden-xs hidden-sm col-lg-3 col-md-3" style="height: 200px; padding: 10px;">
                         <div id="logo-btn">
-                            <a tabindex="0" class="btn btn-default" role="button"
-                               data-toggle="popover"
-                               data-placement="bottom" data-trigger="focus" data-html="True"
-                               data-content='<div id="setting-pop"><a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a><a href="{{ url_for("main.account_edit", id=session['member_id']) }}">编辑信息</a></div>'>设置</a>
+                            {#                            <a href="#" data-toggle="modal" data-target="#my1stModal">修改密码</a>#}
+                            {#                            <a href="{{ url_for("main.account_edit", id=session['member_id']) }}">编辑信息</a>#}
+                            <a class="btn btn-default" role="button"
+                               href="{{ url_for("main.account_edit", id=session['member_id']) }}">编辑信息</a>
+                            <a class="btn btn-default" role="button" href="#" data-toggle="modal"
+                               data-target="#my1stModal">修改密码</a>
                         </div>
                     </div>
 
@@ -135,11 +134,11 @@
             <!-- 2nd Row -->
             <div class="row">
                 <div class="col-md-12 col-lg-10 col-xs-12 info-div">
-                    <ul id="mytab" class="nav nav-tabs">
-                        <li class="active"><a href="#content1" data-toggle="tab">最近活动</a></li>
-                        <li><a href="#content2" data-toggle="tab">活动日历</a></li>
-                        <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
-                    </ul>
+                        <ul id="mytab" class="nav nav-tabs">
+                            <li class="active"><a href="#content1" data-toggle="tab">最近活动</a></li>
+                            <li><a href="#content2" data-toggle="tab">活动日历</a></li>
+                            <li><a href="#content3" data-toggle="tab">Verbose Log</a></li>
+                        </ul>
                     <div id="myTabContent" class="tab-content info-content">
                         <div class="tab-pane fade in active" id="content1">
                             <table class="table table-hover" style="margin-bottom: 0px">
@@ -156,19 +155,19 @@
                                 <tbody>
                                 {% for log in dailylogs %}
                                     {% if loop.index < 10 %}
-                                    <tr>
-                                        <td>{{ log.status }}</td>
-                                        <td>{{ log.addtime.strftime('%m-%d') }}</td>
-                                        <td>{{ log.amount }}元</td>
-                                        <td>
-                                            {% if log.type == '收入' %}
-                                                <a href="#" class="label label-success">{{ log.type }}</a>
-                                            {% else %}
-                                                <a href="#" class="label label-default">{{ log.type }}</a>
-                                            {% endif %}
-                                            /{{ log.category }}
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{ log.status }}</td>
+                                            <td>{{ log.addtime.strftime('%m-%d') }}</td>
+                                            <td>{{ log.amount }}元</td>
+                                            <td>
+                                                {% if log.type == '收入' %}
+                                                    <a href="#" class="label label-success">{{ log.type }}</a>
+                                                {% else %}
+                                                    <a href="#" class="label label-default">{{ log.type }}</a>
+                                                {% endif %}
+                                                /{{ log.category }}
+                                            </td>
+                                        </tr>
                                     {% endif %}
                                 {% endfor %}
                                 </tbody>
