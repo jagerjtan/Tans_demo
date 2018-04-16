@@ -133,8 +133,9 @@ def account_edit(id):
 
         if form.face.data:
             file_url = secure_filename(form.face.data.filename)
+            oldface = member.face
             member.face = change_filename(file_url)
-            form.face.data.save(app.config["MEM_DIR"] + member.face)
+            form.face.data.save(app.config['MEM_DIR'] + member.face)
 
         member.nickname = data['nickname']
         member.mobile = data['mobile']
@@ -149,6 +150,7 @@ def account_edit(id):
             flash("Errors!", "err")
             return redirect(url_for("main.account_eidt", id=id))
         flash("Edit done", "ok")
+        os.renames(app.config['MEM_DIR']+oldface, app.config['MEM_DIR']+'abandoned-'+oldface)
         return redirect(url_for("main.account", id=id))
     return render_template("main/account_edit.html", form=form, id=id)
 
@@ -264,6 +266,7 @@ def memberdetail(id=None):
     if id == None:
         id = 1
     member = Member.query.filter_by(id=id).first()
+    member.pwd = ""
     return render_template('main/memberdetail.html', id=id, member=member)
 
 
