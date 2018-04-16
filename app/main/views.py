@@ -32,12 +32,11 @@ def index(page=None):
     for item in logs.items:
         with db.session.no_autoflush:
             item.member_id = Member.query.filter_by(id=item.member_id).first().nickname
-            item.addtime = item.addtime.strftime('%m-%d')
 
     today = datetime.datetime.now()
     costlist, incomelist = [], []
     for item in logs.items:
-        if item.addtime == today.strftime("%m-%d"):
+        if item.addtime.date() == today.date():
             costlist.append(item.amount if item.type == '支出' else 0)
             incomelist.append(item.amount if item.type == '收入' else 0)
 

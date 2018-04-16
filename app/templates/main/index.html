@@ -77,7 +77,7 @@
                                             <tr class="logconent" onclick="get_detail({{ v.id }})" data-toggle="modal"
                                                 data-target="#myModal">
                                         {% endif %}
-                                    <td><b>{{ v.addtime }}</b></td>
+                                    <td><b>{{ v.addtime.strftime("%m-%d") }}</b></td>
                                     <td>{{ v.amount }}</td>
                                     <td>{{ v.member_id }}</td>
                                     <td>
