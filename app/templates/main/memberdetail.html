@@ -24,9 +24,11 @@
     </div>
     <hr>
     <div>
-        <p>最近记录1</p>
-        <p>最近记录2</p>
-        <p>最近记录3</p>
+        {% for v in member.dailylogs|sort(reverse=True, attribute="id") %}
+            {% if loop.index <6 %}
+                <p>{{ v.addtime }}\{{ v.amount }}\{{ v.type }}\{{ v.category }}</p>
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
 <div class="modal-footer" style="text-align: center">
