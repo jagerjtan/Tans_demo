@@ -11,7 +11,7 @@ HOSTNAME = '127.0.0.1'
 PORT = '3306'
 DATABASE = 'tan_panel'  # 数据库的名字
 USERNAME = 'root'
-PASSWORD = 'chiaki2008'
+PASSWORD = 'xxxxxxx'
 DB_URI = 'mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8'.format(USERNAME, PASSWORD, HOSTNAME, PORT, DATABASE)
 
 SQLALCHEMY_DATABASE_URI = DB_URI
